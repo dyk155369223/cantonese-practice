@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>粵語發音練習 · 睇醫生完整對話</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --green:#00874A;--green-d:#006B3C;--green-l:#E8F5EE;--green-xl:#F5FBF8;
+  --accent:#4CAF50;--blue:#1565C0;--text:#1a1a1a;--text-l:#666;--border:#E0E0E0;--white:#fff;
+  --shadow:0 1px 6px rgba(0,0,0,.05);
+}
+body{font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(--green-xl);color:var(--text);line-height:1.6;min-height:100vh}
+header{background:linear-gradient(135deg,var(--green),var(--green-d));color:#fff;padding:28px 20px;text-align:center;box-shadow:0 2px 12px rgba(0,135,74,.2)}
+header h1{font-size:1.7rem;margin-bottom:4px}
+header p{font-size:.9rem;opacity:.85}
+.controls{max-width:760px;margin:16px auto;padding:0 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.cg{display:flex;align-items:center;gap:8px;background:#fff;padding:7px 14px;border-radius:20px;box-shadow:var(--shadow)}
+.cg label{font-size:.82rem;color:var(--text-l);white-space:nowrap}
+select{border:1px solid var(--border);border-radius:6px;padding:3px 6px;font-size:.82rem;accent-color:var(--green)}
+input[type=range]{accent-color:var(--green);width:90px}
+#speedVal{font-size:.8rem;color:var(--green);min-width:32px}
+.btn-all{background:var(--green);color:#fff;border:none;padding:9px 22px;border-radius:20px;font-size:.88rem;cursor:pointer;transition:.2s;white-space:nowrap}
+.btn-all:hover{background:var(--green-d);transform:translateY(-1px)}
+.btn-all.on{background:#E53935}
+main{max-width:760px;margin:0 auto;padding:0 16px 50px}
+.turn{background:#fff;border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);border-left:4px solid var(--green)}
+.turn.l{border-left-color:var(--accent)}
+.turn.s{border-left-color:var(--blue)}
+.th{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.spk{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.88rem;color:var(--green)}
+.l .spk{color:var(--accent)}
+.s .spk{color:var(--blue)}
+.dot{width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700}
+.l .dot{background:var(--accent)}
+.s .dot{background:var(--blue)}
+.btn-turn{background:var(--green-l);color:var(--green);border:none;padding:5px 14px;border-radius:14px;font-size:.78rem;cursor:pointer;transition:.2s}
+.l .btn-turn{background:#E8F5EE;color:var(--accent)}
+.s .btn-turn{background:#E3F2FD;color:var(--blue)}
+.btn-turn:hover{filter:brightness(.95)}
+.ph{display:flex;align-items:flex-start;gap:10px;padding:9px 10px;border-radius:8px;transition:background .2s;cursor:pointer}
+.ph:hover{background:var(--green-xl)}
+.ph.on{background:var(--green-l);box-shadow:inset 3px 0 0 var(--green)}
+.ph-c{flex:1}
+.ph-y{font-size:1.2rem;font-weight:500;margin-bottom:3px}
+.ph-j{font-size:.86rem;color:var(--green);font-family:"SF Mono",Menlo,monospace;margin-bottom:2px;letter-spacing:.3px}
+.ph-t{font-size:.82rem;color:var(--text-l)}
+.pb{flex-shrink:0;width:34px;height:34px;border-radius:50%;border:none;background:var(--green-l);color:var(--green);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;transition:.2s}
+.pb:hover{background:var(--green);color:#fff;transform:scale(1.1)}
+.pb.on{background:var(--green);color:#fff;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tip{max-width:760px;margin:0 auto;padding:0 16px 30px}
+.tip-box{background:var(--green-l);border-radius:10px;padding:14px 18px;font-size:.82rem;color:var(--text-l);line-height:1.7}
+.tip-box b{color:var(--green)}
+footer{text-align:center;padding:16px;color:var(--text-l);font-size:.78rem}
+@media(max-width:560px){header h1{font-size:1.35rem}.ph-y{font-size:1.05rem}.controls{justify-content:center}}
+</style>
+</head>
+<body>
+<header>
+  <h1>粵語發音練習</h1>
+  <p>睇醫生完整對話 · 生活粵語</p>
+</header>
+
+<div class="controls">
+  <div class="cg"><label>語音</label><span style="font-size:.82rem;color:var(--text-l)">粵語錄音版</span></div>
+  <button class="btn-all" id="btnAll" onclick="toggleAll()">▶ 全部朗讀</button>
+</div>
+
+<main id="dlg"></main>
+
+<div class="tip">
+  <div class="tip-box">
+    <b>學習建議：</b>先點「整段朗讀」聽完整語調，再逐句跟讀練習。語速可調慢至 0.6x 幫助辨音。發音由瀏覽器語音合成（優先粵語聲線），建議用 Safari 或 Chrome 開啟。
+  </div>
+</div>
+
+<footer>點擊每句右側按鈕即可朗讀 · 建議使用 Safari 或 Chrome 瀏覽器</footer>
+
+<script>
+const dialogue=[
+  {speaker:'A',phrases:[
+    {yue:'嘩，乜你個樣咁嘅？',jp:'waa1, mat1 nei5 go3 joeng6 gam3 ge3',t:'哇，怎么你这副模样？'},
+    {yue:'冇厘神氣，面青青咁嘅。',jp:'mou5 lei4 san4 hei3, min6 cing1 cing1 gam3 ge3',t:'没精神，脸色青青的。'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'仲好講，琴晚瞓覺凍親囉，',jp:'zung6 hou2 gong2, kam4 maan5 fan3 gaau3 dung3 can1 lo1',t:'还说我呢，昨晚睡觉着凉了，'},
+    {yue:'今朝一起身就成身發冷，頭赤赤，仲流鼻水添。',jp:'gam1 ziu1 jat1 hei2 san1 zau6 seng4 san1 faat3 laang5, tau4 cek3 cek3, zung6 lau4 bei6 seoi2 tim1',t:'今早一起床就全身发冷，头热热的，还流鼻涕呢。'}
+  ]},
+  {speaker:'A',phrases:[
+    {yue:'你咁大個人瞓覺仲戽被啊？',jp:'nei5 gam3 daai6 go3 jan4 fan3 gaau3 zung6 fu3 pei5 aa3',t:'你这么大个人睡觉还踢被子啊？'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'我辛苦到死，你仲笑我？',jp:'ngo5 san1 fu2 dou3 sei2, nei5 zung6 siu3 ngo5',t:'我难受死了，你还笑我？'}
+  ]},
+  {speaker:'A',phrases:[
+    {yue:'同你講吓笑啫。',jp:'tung4 nei5 gong2 haa5 siu3 zek1',t:'跟你开个玩笑罢了。'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'今日我上唔到堂，你幫我請個假。',jp:'gam1 jat6 ngo5 soeng5 m4 dou3 tong4, nei5 bong1 ngo5 cing2 go3 gaa3',t:'今天我上不了课，你帮我请个假。'}
+  ]},
+  {speaker:'A',phrases:[
+    {yue:'冇問題。你快啲去睇吓醫生啦。',jp:'mou5 man6 tai4. nei5 faai3 di1 heoi3 tai2 haa5 ji1 saang1 laa1',t:'没问题。你快点去看一下医生吧。'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'傷風啫，冇乜大礙嘅，睇唔睇都係咁㗎啦。',jp:'soeng1 fung1 zek1, mou5 mat1 daai6 ngoi6 ge3, tai2 m4 tai2 dou1 hai6 gam3 gaa3 laa1',t:'只是感冒，没什么大碍，看不看都这样的啦。'}
+  ]},
+  {speaker:'A',phrases:[
+    {yue:'唔係咁講㗎，俾醫生睇吓，食啲藥，好得快啲㗎，自己又唔使咁辛苦。',jp:'m4 hai6 gam3 gong2 gaa3, bei2 ji1 saang1 tai2 haa5, sik6 di1 joek6, hou2 dak1 faai3 di1 gaa3, zi6 gei2 jau6 m4 sai2 gam3 san1 fu2',t:'不是这么说的，给医生看一下，吃点药，好得快些，自己又不用这么难受。'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'好啦，聽晒你話，我而家即刻去醫院。',jp:'hou2 laa1, teng1 saai3 nei5 waa6, ngo5 ji4 gaa1 zik1 hak1 heoi3 ji1 jyun2',t:'好吧，全听你的，我现在马上去医院。'}
+  ]},
+  {speaker:'醫生',phrases:[
+    {yue:'邊度唔舒服呀？',jp:'bin1 dou6 m4 syu1 fuk6 aa3',t:'哪里不舒服呀？'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'唔知係唔係琴晚凍親呢？',jp:'m4 zi1 hai6 m4 hai6 kam4 maan5 dung3 can1 ne1',t:'不知道是不是昨晚着凉了呢？'},
+    {yue:'今朝起身就覺得發冷、頭痛，仲打乞嗤流鼻水添。',jp:'gam1 ziu1 hei2 san1 zau6 gok3 dak1 faat3 laang5, tau4 tung3, zung6 daa2 hat1 ci1 lau4 bei6 seoi2 tim1',t:'今早起床就觉得发冷、头痛，还打喷嚏流鼻涕呢。'}
+  ]},
+  {speaker:'醫生',phrases:[
+    {yue:'有冇喉嚨痛、咳呀？',jp:'jau5 mou5 hau4 lung4 tung3, haak1 aa3',t:'有没有喉咙痛、咳嗽呀？'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'喉嚨有啲痕痕哋，都有幾聲咳。',jp:'hau4 lung4 jau5 di1 han4 han4 dei2, dou1 jau5 gei2 seng1 haak1',t:'喉咙有点痒痒的，也咳了几声。'}
+  ]},
+  {speaker:'醫生',phrases:[
+    {yue:'有冇發燒呀？',jp:'jau5 mou5 faat3 siu1 aa3',t:'有没有发烧呀？'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'求先掛號嗰陣，姑娘幫我探過熱，',jp:'kau4 sin1 gwaa3 hou6 go2 zan6, gu1 noeng4 bong1 ngo5 taam3 gwo3 jit6',t:'刚才挂号那会儿，护士帮我量过体温，'},
+    {yue:'佢話有啲燒，三十七度半。',jp:'keoi5 waa6 jau5 di1 siu1, saam1 sap6 cat1 dou6 bun3',t:'她说有点烧，三十七度半。'}
+  ]},
+  {speaker:'醫生',phrases:[
+    {yue:'擘大口俾我睇吓。',jp:'maak3 daai6 hau2 bei2 ngo5 tai2 haa5',t:'张大嘴给我看看。'}
+  ]},
+  {speaker:'醫生',phrases:[
+    {yue:'喉嚨好紅啵。',jp:'hau4 lung4 hou2 hung4 bo3',t:'喉咙很红哦。'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'咁我係唔係傷風呀？',jp:'gam2 ngo5 hai6 m4 hai6 soeng1 fung1 aa3',t:'那我是不是感冒呀？'}
+  ]},
+  {speaker:'醫生',phrases:[
+    {yue:'係呀。個肚有冇唔舒服呀？',jp:'hai6 aa3. go3 tou5 jau5 mou5 m4 syu1 fuk6 aa3',t:'是呀。肚子有没有不舒服呀？'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'早兩日就有，屙咗幾次，',jp:'zou2 loeng5 jat6 zau6 jau5, o1 zo2 gei2 ci3',t:'前两日就有，拉了几次，'},
+    {yue:'我自己搵啲藥食咗又好似冇乜事。',jp:'ngo5 zi6 gei2 wan2 di1 joek6 sik6 zo2 jau6 hou2 ci5 mou5 mat1 si6',t:'我自己找点药吃了又好像没什么事。'}
+  ]},
+  {speaker:'醫生',phrases:[
+    {yue:'有事就要睇醫生，千祈唔好立亂食藥呀。',jp:'jau5 si6 zau6 jiu3 tai2 ji1 saang1, cin1 kei4 m4 hou2 lap6 lyun6 sik6 joek6 aa3',t:'有事就要看医生，千万别乱吃药呀。'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'哦。咁我使唔使打針呀？',jp:'o4. gam2 ngo5 sai2 m4 sai2 daa2 zam1 aa3',t:'哦。那我要不要打针呀？'}
+  ]},
+  {speaker:'醫生',phrases:[
+    {yue:'唔使打針，食啲藥得啦。',jp:'m4 sai2 daa2 zam1, sik6 di1 joek6 dak1 laa1',t:'不用打针，吃点药就行了。'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'咁就好啦！我最驚打針，又怕食中藥。',jp:'gam2 zau6 hou2 laa1! ngo5 zeoi3 geng1 daa2 zam1, jau6 paa3 sik6 zung1 joek6',t:'那就好啦！我最怕打针，又怕吃中药。'}
+  ]},
+  {speaker:'醫生',phrases:[
+    {yue:'返去飲多啲水，唞兩日就冇事。',jp:'faan1 heoi3 jam2 do1 di1 seoi2, tau2 loeng5 jat6 zau6 mou5 si6',t:'回去多喝点水，休息两天就没事了。'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'啲藥點食呀？',jp:'di1 joek6 dim2 sik6 aa3',t:'药怎么吃呀？'}
+  ]},
+  {speaker:'醫生',phrases:[
+    {yue:'紅色一日三次，一次兩粒；白色一日三次，一次一粒。',jp:'hung4 sik1 jat1 jat6 saam1 ci3, jat1 ci3 loeng5 lap1; baak6 sik1 jat1 jat6 saam1 ci3, jat1 ci3 jat1 lap1',t:'红色一日三次，一次两粒；白色一日三次，一次一粒。'},
+    {yue:'有乜唔明白嘅就問藥房嘅姑娘啦。',jp:'jau5 mat1 m4 ming4 baak6 ge3 zau6 man6 joek6 fong4 ge3 gu1 noeng4 laa1',t:'有什么不明白的就问药房的小姐。'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'唔該晒你，醫生。',jp:'m4 goi1 saai3 nei5, ji1 saang1',t:'太谢谢你了，医生。'}
+  ]},
+  {speaker:'醫生',phrases:[
+    {yue:'唔使唔該，去嗰邊攞藥呀。',jp:'m4 sai2 m4 goi1, heoi3 go2 bin1 lo2 joek6 aa3',t:'不客气，去那边拿药。'}
+  ]},
+  {speaker:'A',phrases:[
+    {yue:'你嘅面色幾好。',jp:'nei5 ge3 min6 sik1 gei2 hou2',t:'你的脸色挺好。'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'係呀，個醫生啲藥都幾work。',jp:'hai6 aa3, go3 ji1 saang1 di1 joek6 dou1 gei2 work',t:'是呀，那个医生的药还挺有效的。'}
+  ]},
+  {speaker:'A',phrases:[
+    {yue:'我都話咗有病就快啲搵醫生㗎啦。',jp:'ngo5 dou1 waa6 zo2 jau5 beng6 zau6 faai3 di1 wan2 ji1 saang1 gaa3 laa1',t:'我就说了有病就快点找医生啦。'},
+    {yue:'唔食藥，細病都會變大病㗎。',jp:'m4 sik6 joek6, sai3 beng6 dou1 wui5 bin3 daai6 beng6 gaa3',t:'不吃药，小病也会变大病。'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'不過去醫院好煩㗎。',jp:'bat1 gwo3 heoi3 ji1 jyun2 hou2 faan4 gaa3',t:'不过去医院很烦的。'},
+    {yue:'有時小小病，醫生又要你查呢樣查嗰樣，',jp:'jau5 si4 siu2 siu2 beng6, ji1 saang1 jau6 jiu3 nei5 caa4 ni1 joeng6 caa4 go2 joeng6',t:'有时小病，医生又要你查这查那，'},
+    {yue:'一陣又話照X光啦，一陣又話做超聲波，又嘥時間又嘥錢。',jp:'jat1 zan6 jau6 waa6 ziu3 X gwong1 laa1, jat1 zan6 jau6 waa6 zou6 ciu1 sing1 bo1, jau6 saai1 si4 gaan3 jau6 saai1 cin2',t:'一会儿又说照X光，一会儿又说做超声波，又浪费时间又浪费钱。'}
+  ]},
+  {speaker:'A',phrases:[
+    {yue:'有病仲有乜計啫。',jp:'jau5 beng6 zung6 jau5 mat1 gai3 zek1',t:'有病还能有什么办法呢。'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'最好就係多啲鍛煉身體，唔使搵醫生。',jp:'zeoi3 hou2 zau6 hai6 do1 di1 dyun3 lin6 san1 tai2, m4 sai2 wan2 ji1 saang1',t:'最好的就是多锻炼身体，不用找医生。'}
+  ]}
+];
+
+/* 说话人配色 class 映射：A=绿, B=浅绿, 醫生=蓝 */
+function spkClass(sp){return sp==='A'?'':(sp==='B'?' l':' s');}
+
+/* === 渲染对话 === */
+function render(){
+  var html='';var gidx=0;
+  dialogue.forEach(function(turn,ti){
+    var cls=spkClass(turn.speaker);
+    var dot=turn.speaker;
+    html+='<div class="turn'+cls+'"><div class="th"><div class="spk"><span class="dot">'+dot+'</span>'+turn.speaker+'</div><button class="btn-turn" onclick="playTurn('+ti+')">▶ 整段朗讀</button></div>';
+    turn.phrases.forEach(function(p,  pi){
+      gidx++;
+      html+='<div class="ph" data-t="'+ti+'" data-p="'+pi+'" data-audio="audio/'+String(gidx).padStart(3,'0')+'.mp3" onclick="playPhrase('+ti+','+pi+')"><div class="ph-c"><div class="ph-y">'+p.yue+'</div><div class="ph-j">'+p.jp+'</div><div class="ph-t">'+p.t+'</div></div><button class="pb" onclick="event.stopPropagation();playPhrase('+ti+','+pi+')">▶</button></div>';
+    });
+    html+='</div>';
+  });
+  document.getElementById('dlg').innerHTML=html;
+}
+render();
+
+/* === 音频朗读（预生成 mp3，兼容微信 WebView） === */
+var audioEl=null;
+var isPlayingAll=false,allIdx=0;
+
+function playAudio(url,onEnd,onErr){
+  if(audioEl){try{audioEl.pause();}catch(e){}}
+  var a=new Audio(url);
+  audioEl=a;
+  a.onended=function(){clearHL();if(onEnd)onEnd();};
+  a.onerror=function(){clearHL();if(onErr)onErr();};
+  var pr=a.play();
+  if(pr&&pr.catch)pr.catch(function(){clearHL();if(onErr)onErr();});
+}
+
+function clearHL(){
+  var on1=document.querySelectorAll('.ph.on'),on2=document.querySelectorAll('.pb.on');
+  for(var i=0;i<on1.length;i++)on1[i].classList.remove('on');
+  for(var j=0;j<on2.length;j++)on2[j].classList.remove('on');
+}
+
+/* 音频朗读见 playAudio()，不再使用浏览器内置语音合成（微信 WebView 不支持） */
+
+function playPhrase(ti,pi){
+  clearHL();
+  var ph=document.querySelector('[data-t="'+ti+'"][data-p="'+pi+'"]');
+  if(!ph)return;
+  var pb=ph.querySelector('.pb');
+  ph.classList.add('on');pb.classList.add('on');
+  playAudio(ph.dataset.audio,function(){ph.classList.remove('on');pb.classList.remove('on')});
+}
+
+function playTurn(ti){
+  if(isPlayingAll)toggleAll();
+  var turn=dialogue[ti];var pi=0;
+  function next(){
+    if(pi>=turn.phrases.length)return;
+    clearHL();
+    var ph=document.querySelector('[data-t="'+ti+'"][data-p="'+pi+'"]');
+    if(!ph)return;
+    var pb=ph.querySelector('.pb');
+    ph.classList.add('on');pb.classList.add('on');
+    playAudio(ph.dataset.audio,function(){
+      ph.classList.remove('on');pb.classList.remove('on');
+      pi++;if(pi<turn.phrases.length)setTimeout(next,300);
+    });
+  }
+  next();
+}
+
+function toggleAll(){
+  if(isPlayingAll){
+    if(audioEl)try{audioEl.pause()}catch(e){}
+    isPlayingAll=false;allIdx=0;clearHL();
+    var b=document.getElementById('btnAll');
+    b.textContent='▶ 全部朗讀';b.classList.remove('on');
+    return;
+  }
+  isPlayingAll=true;allIdx=0;
+  var b=document.getElementById('btnAll');
+  b.textContent='■ 停止朗讀';b.classList.add('on');
+  function next(){
+    if(!isPlayingAll)return;
+    var idx=0,ft=0,fp=0;
+    for(var t=0;t<dialogue.length;t++)
+      for(var p=0;p<dialogue[t].phrases.length;p++){
+        if(idx===allIdx){ft=t;fp=p}idx++;
+      }
+    if(allIdx>=idx){
+      isPlayingAll=false;b.textContent='▶ 全部朗讀';b.classList.remove('on');return;
+    }
+    clearHL();
+    var ph=document.querySelector('[data-t="'+ft+'"][data-p="'+fp+'"]');
+    if(!ph)return;
+    var pb=ph.querySelector('.pb');
+    ph.classList.add('on');pb.classList.add('on');
+    ph.scrollIntoView({behavior:'smooth',block:'center'});
+    playAudio(ph.dataset.audio,function(){
+      ph.classList.remove('on');pb.classList.remove('on');
+      allIdx++;if(isPlayingAll)setTimeout(next,400);
+    });
+  }
+  next();
+}
+
+/* 语速滑块已移除：音频为预生成录音，语速固定 */
+</script>
+</body>
+</html>
