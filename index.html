@@ -69,13 +69,14 @@ footer{text-align:center;padding:16px;color:var(--text-l);font-size:.78rem}
 <div class="controls">
   <div class="cg"><label>語音</label><span style="font-size:.82rem;color:var(--text-l)">粵語錄音版</span></div>
   <button class="btn-all" id="btnAll" onclick="toggleAll()">▶ 全部朗讀</button>
+  <div class="cg"><label>語速</label><input type="range" id="speed" min="0.6" max="1.4" step="0.05" value="1.0" oninput="setSpeed(this.value)"><span id="speedVal">1.0x</span></div>
 </div>
 
 <main id="dlg"></main>
 
 <div class="tip">
   <div class="tip-box">
-    <b>學習建議：</b>先點「整段朗讀」聽完整語調，再逐句跟讀練習。語速可調慢至 0.6x 幫助辨音。發音由瀏覽器語音合成（優先粵語聲線），建議用 Safari 或 Chrome 開啟。
+    <b>學習建議：</b>先點「整段朗讀」聽完整語調，再逐句跟讀練習。語速可用上方滑桿調整（0.6x~1.4x），調慢幫助辨音。發音為預錄粵語語音（港澳口語腔調，自然停頓），微信內亦可正常播放。
   </div>
 </div>
 
@@ -224,11 +225,13 @@ render();
 
 /* === 音频朗读（预生成 mp3，兼容微信 WebView） === */
 var audioEl=null;
+var curSpeed=1.0;
 var isPlayingAll=false,allIdx=0;
 
 function playAudio(url,onEnd,onErr){
   if(audioEl){try{audioEl.pause();}catch(e){}}
   var a=new Audio(url);
+  a.playbackRate=curSpeed;
   audioEl=a;
   a.onended=function(){clearHL();if(onEnd)onEnd();};
   a.onerror=function(){clearHL();if(onErr)onErr();};
@@ -306,7 +309,8 @@ function toggleAll(){
   next();
 }
 
-/* 语速滑块已移除：音频为预生成录音，语速固定 */
+/* 语速条：通过 audio.playbackRate 控制预生成录音播放速度（0.6x~1.4x） */
+function setSpeed(v){curSpeed=parseFloat(v);document.getElementById('speedVal').textContent=(Math.round(curSpeed*100)/100)+'x';}
 </script>
 </body>
 </html>
