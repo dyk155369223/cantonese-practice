@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>粤语发音练习 · 办业务对话（线上版）</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --green:#00874A;--green-d:#006B3C;--green-l:#E8F5EE;--green-xl:#F5FBF8;
+  --accent:#4CAF50;--blue:#1565C0;--text:#1a1a1a;--text-l:#666;--border:#E0E0E0;--white:#fff;
+  --shadow:0 1px 6px rgba(0,0,0,.05);
+}
+body{font-family:"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;background:var(--green-xl);color:var(--text);line-height:1.6;min-height:100vh}
+header{background:linear-gradient(135deg,var(--green),var(--green-d));color:#fff;padding:28px 20px;text-align:center;box-shadow:0 2px 12px rgba(0,135,74,.2)}
+header h1{font-size:1.7rem;margin-bottom:4px}
+header p{font-size:.9rem;opacity:.85}
+.controls{max-width:760px;margin:16px auto;padding:0 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.cg{display:flex;align-items:center;gap:8px;background:#fff;padding:7px 14px;border-radius:20px;box-shadow:var(--shadow)}
+.cg label{font-size:.82rem;color:var(--text-l);white-space:nowrap}
+input[type=range]{accent-color:var(--green);width:90px}
+#speedVal{font-size:.8rem;color:var(--green);min-width:32px}
+.btn-all{background:var(--green);color:#fff;border:none;padding:9px 22px;border-radius:20px;font-size:.88rem;cursor:pointer;transition:.2s;white-space:nowrap}
+.btn-all:hover{background:var(--green-d);transform:translateY(-1px)}
+.btn-all.on{background:#E53935}
+main{max-width:760px;margin:0 auto;padding:0 16px 50px}
+.turn{background:#fff;border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);border-left:4px solid var(--green)}
+.turn.l{border-left-color:var(--accent)}
+.turn.s{border-left-color:var(--blue)}
+.th{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.spk{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.88rem;color:var(--green)}
+.l .spk{color:var(--accent)}
+.s .spk{color:var(--blue)}
+.dot{width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700}
+.l .dot{background:var(--accent)}
+.s .dot{background:var(--blue)}
+.btn-turn{background:var(--green-l);color:var(--green);border:none;padding:5px 14px;border-radius:14px;font-size:.78rem;cursor:pointer;transition:.2s}
+.l .btn-turn{background:#E8F5EE;color:var(--accent)}
+.s .btn-turn{background:#E3F2FD;color:var(--blue)}
+.btn-turn:hover{filter:brightness(.95)}
+.ph{display:flex;align-items:flex-start;gap:10px;padding:9px 10px;border-radius:8px;transition:background .2s;cursor:pointer}
+.ph:hover{background:var(--green-xl)}
+.ph.on{background:var(--green-l);box-shadow:inset 3px 0 0 var(--green)}
+.ph-c{flex:1}
+.ph-y{font-size:1.2rem;font-weight:500;margin-bottom:3px}
+.ph-j{font-size:.86rem;color:var(--green);font-family:"SF Mono",Menlo,monospace;margin-bottom:2px;letter-spacing:.3px}
+.ph-t{font-size:.82rem;color:var(--text-l)}
+.pb{flex-shrink:0;width:34px;height:34px;border-radius:50%;border:none;background:var(--green-l);color:var(--green);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;transition:.2s}
+.pb:hover{background:var(--green);color:#fff;transform:scale(1.1)}
+.pb.on{background:var(--green);color:#fff;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tip{max-width:760px;margin:0 auto;padding:0 16px 30px}
+.tip-box{background:var(--green-l);border-radius:10px;padding:14px 18px;font-size:.82rem;color:var(--text-l);line-height:1.7}
+.tip-box b{color:var(--green)}
+footer{text-align:center;padding:16px;color:var(--text-l);font-size:.78rem}
+@media(max-width:560px){header h1{font-size:1.35rem}.ph-y{font-size:1.05rem}.controls{justify-content:center}}
+</style>
+</head>
+<body>
+<header>
+  <h1>粤语发音练习</h1>
+  <p>办业务对话 · 生活粤语（录音版）</p>
+</header>
+
+<div class="controls">
+  <div class="cg"><label>语速</label><input type="range" id="speed" min="0.6" max="1.4" step="0.05" value="1"><span id="speedVal">1.00x</span></div>
+  <button class="btn-all" id="btnAll" onclick="toggleAll()">▶ 全部朗读</button>
+</div>
+
+<main id="dlg"></main>
+
+<div class="tip">
+  <div class="tip-box">
+    <b>学习建议：</b>先点「整段朗读」听完整语调，再逐句跟读练习。语速可在 0.6x~1.4x 实时调节（调慢帮助辨音）。本页为预生成粤语录音（mp3），微信里点播放也能正常出声。
+  </div>
+</div>
+
+<footer>点击每句右侧按钮即可播放录音 · 支持微信转发</footer>
+
+<script>
+const dialogue=[
+  {speaker:'客',phrases:[
+    {yue:'早晨！',jp:'zou2 san4',t:'早上好！',audio:'audio/001.mp3'},
+    {yue:'請問辦咩業務？',jp:'cing2 man6 baan6 me1 jip6 mou6',t:'请问办什么业务？',audio:'audio/002.mp3'}
+  ]},
+  {speaker:'職',phrases:[
+    {yue:'請坐低，',jp:'cing2 co5 dai1',t:'请坐下，',audio:'audio/003.mp3'},
+    {yue:'慢慢講。',jp:'maan6 maan6 gong2',t:'慢慢说。',audio:'audio/004.mp3'}
+  ]}
+];
+
+/* 说话人配色 class 映射 */
+function spkClass(sp){return sp==='客'?'':(sp==='職'?' l':' s');}
+
+/* === 渲染对话 === */
+function render(){
+  var html='';
+  dialogue.forEach(function(turn,ti){
+    var cls=spkClass(turn.speaker);
+    var dot=turn.speaker;
+    html+='<div class="turn'+cls+'"><div class="th"><div class="spk"><span class="dot">'+dot+'</span>'+turn.speaker+'</div><button class="btn-turn" onclick="playTurn('+ti+')">▶ 整段朗读</button></div>';
+    turn.phrases.forEach(function(p,pi){
+      html+='<div class="ph" data-t="'+ti+'" data-p="'+pi+'" onclick="playPhrase('+ti+','+pi+')"><div class="ph-c"><div class="ph-y">'+p.yue+'</div><div class="ph-j">'+p.jp+'</div><div class="ph-t">'+p.t+'</div></div><button class="pb" onclick="event.stopPropagation();playPhrase('+ti+','+pi+')">▶</button></div>';
+    });
+    html+='</div>';
+  });
+  document.getElementById('dlg').innerHTML=html;
+}
+render();
+
+/* === 预生成 mp3 播放（禁用浏览器语音合成，微信可用） === */
+var audioEl=null;
+var speed=1;
+var isPlayingAll=false,allIdx=0;
+
+try{
+  document.getElementById('speed').addEventListener('input',function(){
+    speed=parseFloat(this.value);
+    document.getElementById('speedVal').textContent=speed.toFixed(2)+'x';
+    if(audioEl)audioEl.playbackRate=speed;
+  });
+}catch(e){}
+
+function clearHL(){
+  var on1=document.querySelectorAll('.ph.on'),on2=document.querySelectorAll('.pb.on');
+  for(var i=0;i<on1.length;i++)on1[i].classList.remove('on');
+  for(var j=0;j<on2.length;j++)on2[j].classList.remove('on');
+}
+
+function playAudio(url,onEnd){
+  if(audioEl){try{audioEl.pause();}catch(e){}audioEl=null;}
+  var a=new Audio(url);
+  a.playbackRate=speed;
+  audioEl=a;
+  a.onended=function(){if(onEnd)onEnd();};
+  var pr=a.play();
+  if(pr&&pr.catch)pr.catch(function(){});
+  return a;
+}
+
+function playPhrase(ti,pi){
+  clearHL();
+  var ph=document.querySelector('[data-t="'+ti+'"][data-p="'+pi+'"]');
+  if(!ph)return;
+  var pb=ph.querySelector('.pb');
+  ph.classList.add('on');pb.classList.add('on');
+  playAudio(dialogue[ti].phrases[pi].audio,function(){
+    ph.classList.remove('on');pb.classList.remove('on');
+  });
+}
+
+function playTurn(ti){
+  if(isPlayingAll)toggleAll();
+  var turn=dialogue[ti];var pi=0;
+  function next(){
+    if(pi>=turn.phrases.length)return;
+    clearHL();
+    var ph=document.querySelector('[data-t="'+ti+'"][data-p="'+pi+'"]');
+    if(!ph)return;
+    var pb=ph.querySelector('.pb');
+    ph.classList.add('on');pb.classList.add('on');
+    playAudio(turn.phrases[pi].audio,function(){
+      ph.classList.remove('on');pb.classList.remove('on');
+      pi++;if(pi<turn.phrases.length)setTimeout(next,400);
+    });
+  }
+  next();
+}
+
+function toggleAll(){
+  if(isPlayingAll){
+    if(audioEl)try{audioEl.pause();}catch(e){}
+    isPlayingAll=false;allIdx=0;clearHL();
+    var b=document.getElementById('btnAll');
+    b.textContent='▶ 全部朗读';b.classList.remove('on');
+    return;
+  }
+  isPlayingAll=true;allIdx=0;
+  var b=document.getElementById('btnAll');
+  b.textContent='■ 停止朗读';b.classList.add('on');
+  function next(){
+    if(!isPlayingAll)return;
+    var idx=0,ft=0,fp=0;
+    for(var t=0;t<dialogue.length;t++)
+      for(var p=0;p<dialogue[t].phrases.length;p++){
+        if(idx===allIdx){ft=t;fp=p}idx++;
+      }
+    if(allIdx>=idx){
+      isPlayingAll=false;b.textContent='▶ 全部朗读';b.classList.remove('on');return;
+    }
+    clearHL();
+    var ph=document.querySelector('[data-t="'+ft+'"][data-p="'+fp+'"]');
+    if(!ph)return;
+    var pb=ph.querySelector('.pb');
+    ph.classList.add('on');pb.classList.add('on');
+    ph.scrollIntoView({behavior:'smooth',block:'center'});
+    playAudio(dialogue[ft].phrases[fp].audio,function(){
+      ph.classList.remove('on');pb.classList.remove('on');
+      allIdx++;if(isPlayingAll)setTimeout(next,500);
+    });
+  }
+  next();
+}
+</script>
+</body>
+</html>
