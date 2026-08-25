@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>粵語發音練習 · 俗語對話</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#AD1457;--red-d:#880E4F;--red-l:#FCE4EC;--red-xl:#FFF5F9;
+  --accent:#6A1B9A;--text:#1a1a1a;--text-l:#666;--border:#E0E0E0;--white:#fff;
+  --shadow:0 1px 6px rgba(0,0,0,.05);
+}
+body{font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(--red-xl);color:var(--text);line-height:1.6;min-height:100vh}
+header{background:linear-gradient(135deg,var(--red),var(--red-d));color:#fff;padding:28px 20px;text-align:center;box-shadow:0 2px 12px rgba(173,20,87,.2)}
+header h1{font-size:1.7rem;margin-bottom:4px}
+header p{font-size:.9rem;opacity:.85}
+.controls{max-width:760px;margin:16px auto;padding:0 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.cg{display:flex;align-items:center;gap:8px;background:#fff;padding:7px 14px;border-radius:20px;box-shadow:var(--shadow)}
+.cg label{font-size:.82rem;color:var(--text-l);white-space:nowrap}
+input[type=range]{accent-color:var(--red);width:90px}
+#speedVal{font-size:.8rem;color:var(--red);min-width:32px}
+.btn-all{background:var(--red);color:#fff;border:none;padding:9px 22px;border-radius:20px;font-size:.88rem;cursor:pointer;transition:.2s;white-space:nowrap}
+.btn-all:hover{background:var(--red-d);transform:translateY(-1px)}
+.btn-all.on{background:#E53935}
+main{max-width:760px;margin:0 auto;padding:0 16px 10px}
+.sec-title{display:flex;align-items:center;gap:10px;margin:22px 0 12px;font-size:1.02rem;font-weight:700;color:var(--red-d)}
+.sec-title .n{width:26px;height:26px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700}
+.sec-title .sub{font-size:.78rem;font-weight:400;color:var(--text-l)}
+.wcard{background:#fff;border-radius:12px;padding:6px 16px;box-shadow:var(--shadow);margin-bottom:14px}
+.wrow{padding:12px 4px;border-bottom:1px dashed var(--border)}
+.wrow:last-child{border-bottom:none}
+.w-head{display:flex;align-items:center;gap:10px;cursor:pointer}
+.w-word{font-size:1.18rem;font-weight:600;color:var(--red-d)}
+.w-jp{font-size:.84rem;color:var(--red);font-family:"SF Mono",Menlo,monospace;letter-spacing:.3px}
+.w-t{font-size:.82rem;color:var(--text-l);flex:1}
+.wb{flex-shrink:0;width:32px;height:32px;border-radius:50%;border:none;background:var(--red-l);color:var(--red);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:.2s}
+.wb:hover{background:var(--red);color:#fff;transform:scale(1.1)}
+.wb.on{background:var(--red);color:#fff;animation:pulse 1s infinite}
+.w-ex{margin-top:6px;padding:7px 10px;border-radius:8px;background:var(--red-xl);display:flex;align-items:flex-start;gap:8px;cursor:pointer;transition:background .2s}
+.w-ex:hover{background:var(--red-l)}
+.w-ex.on{background:var(--red-l);box-shadow:inset 3px 0 0 var(--red)}
+.w-ex-c{flex:1}
+.w-ex-y{font-size:.92rem;margin-bottom:1px}
+.w-ex-j{font-size:.76rem;color:var(--red);font-family:"SF Mono",Menlo,monospace;margin-bottom:1px;letter-spacing:.2px}
+.w-ex-t{font-size:.76rem;color:var(--text-l)}
+.w-ex .wb{width:28px;height:28px;font-size:.8rem}
+.turn{background:#fff;border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);border-left:4px solid var(--red)}
+.turn.l{border-left-color:var(--accent)}
+.th{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.spk{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.88rem;color:var(--red)}
+.l .spk{color:var(--accent)}
+.dot{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700}
+.l .dot{background:var(--accent)}
+.btn-turn{background:var(--red-l);color:var(--red);border:none;padding:5px 14px;border-radius:14px;font-size:.78rem;cursor:pointer;transition:.2s}
+.l .btn-turn{background:#F3E5F5;color:var(--accent)}
+.btn-turn:hover{filter:brightness(.95)}
+.ph{display:flex;align-items:flex-start;gap:10px;padding:9px 10px;border-radius:8px;transition:background .2s;cursor:pointer}
+.ph:hover{background:var(--red-xl)}
+.ph.on{background:var(--red-l);box-shadow:inset 3px 0 0 var(--red)}
+.l .ph.on{background:#F3E5F5;box-shadow:inset 3px 0 0 var(--accent)}
+.ph-c{flex:1}
+.ph-y{font-size:1.2rem;font-weight:500;margin-bottom:3px}
+.ph-j{font-size:.86rem;color:var(--red);font-family:"SF Mono",Menlo,monospace;margin-bottom:2px;letter-spacing:.3px}
+.l .ph-j{color:var(--accent)}
+.ph-t{font-size:.82rem;color:var(--text-l)}
+.pb{flex-shrink:0;width:34px;height:34px;border-radius:50%;border:none;background:var(--red-l);color:var(--red);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;transition:.2s}
+.l .pb{background:#F3E5F5;color:var(--accent)}
+.pb:hover{background:var(--red);color:#fff;transform:scale(1.1)}
+.l .pb:hover{background:var(--accent)}
+.pb.on{background:var(--red);color:#fff;animation:pulse 1s infinite}
+.l .pb.on{background:var(--accent)}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tip{max-width:760px;margin:0 auto;padding:6px 16px 30px}
+.tip-box{background:var(--red-l);border-radius:10px;padding:14px 18px;font-size:.82rem;color:var(--text-l);line-height:1.7}
+.tip-box b{color:var(--red)}
+footer{text-align:center;padding:16px;color:var(--text-l);font-size:.78rem}
+@media(max-width:560px){header h1{font-size:1.35rem}.ph-y{font-size:1.05rem}.w-word{font-size:1.05rem}.controls{justify-content:center}}
+</style>
+</head>
+<body>
+<header>
+  <h1>粵語發音練習 · 俗語對話</h1>
+  <p>返工俗語 + 送禮歇後語 · 苦瓜乾・牛肉乾・掂過碌蔗・金叵羅</p>
+</header>
+
+<div class="controls">
+  <div class="cg"><label>語速</label><input type="range" id="speed" min="0.5" max="1.2" step="0.05" value="1"><span id="speedVal">1.00x</span></div>
+  <button class="btn-all" id="btnAll" onclick="toggleAll()">▶ 全部朗讀</button>
+</div>
+
+<main>
+  <div class="sec-title"><span class="n">語</span>俗語辭典<span class="sub">點行讀詞 · 點例句讀句子</span></div>
+  <div class="wcard" id="wlist"></div>
+
+  <div class="sec-title"><span class="n">一</span>返工收工 · 俗語傾偈<span class="sub">見客泊街・炒魷魚・搶頭啖湯</span></div>
+  <div id="dlg1"></div>
+
+  <div class="sec-title"><span class="n">二</span>去舅父屋企送禮<span class="sub">兩梳蕉・大番薯・金叵羅・包雲吞</span></div>
+  <div id="dlg2"></div>
+</main>
+
+<div class="tip">
+  <div class="tip-box">
+    <b>發音要點：</b>「掂」<b>掂過碌蔗</b>嘅「掂」讀 <b>dim6</b>（順利義，唔係 dim2「點」）；「叵」<b>金叵羅</b>讀 <b>bo2</b>（生僻字，掌上明珠）；「啖」<b>頭啖湯</b>讀 <b>daam5</b>；「薑」<b>夠薑</b>讀 <b>goeng1</b>（胆量）；「唞」<b>唞吓</b>讀 <b>tau3</b>（休息）。<br>
+    <b>口語變調：</b>「樣」標準音 joeng6，口語「點樣／嘅樣」常升讀 yeung6；「被公司炒」嘅「被」口語讀 <b>bei2</b>（同「俾」），書面語讀 bei6。<br>
+    <b>學習建議：</b>先聽俗語辭典識詞，再逐段「整段朗讀」感受語氣，最後逐句跟讀；語速可調至 0.6x 幫助辨音。發音為預錄真人感語音，微信內可直接播放。
+  </div>
+</div>
+
+<footer>點擊每句右側按鈕即可朗讀 · 微信／瀏覽器均可直接播放</footer>
+<audio id="player" preload="none"></audio>
+
+<script>
+/* === 俗语辞典（a=词条音频编号，ea=例句音频编号） === */
+const words=[
+  {w:'苦瓜乾',jp:'fu2 gwaa1 gon1',t:'愁眉苦臉的樣子',ex:'點解你今日苦瓜乾咁嘅樣啊？',exjp:'dim2 gaai2 nei5 gam1 jat6 fu2 gwaa1 gon1 gam2 ge3 joeng6 aa3',ext:'為什麼你今天愁眉苦臉的樣子呀？',a:'001',ea:'014'},
+  {w:'牛肉乾',jp:'ngau4 juk6 gon1',t:'違例泊車告票（比喻）',ex:'結果收咗張牛肉乾呀！',exjp:'git3 gwo2 sau1 zo2 zoeng1 ngau4 juk6 gon1 aa3',ext:'結果被開了一張違例泊車告票！',a:'002',ea:'015'},
+  {w:'炒魷魚',jp:'caau2 jau4 jyu4',t:'解僱（捲鋪蓋走人）',ex:'好過做錯嘢被公司炒魷魚。',exjp:'hou2 gwo3 zou6 co3 je5 bei2 gung1 si1 caau2 jau4 jyu4',ext:'好過做錯事被公司解僱。',a:'003',ea:'016'},
+  {w:'燉冬菇',jp:'dan6 dung1 gu1',t:'降職',ex:'被公司炒魷魚或者燉冬菇呀。',exjp:'bei2 gung1 si1 caau2 jau4 jyu4 waak6 ze2 dan6 dung1 gu1 aa3',ext:'被公司解僱或者降職呀。',a:'004',ea:'017'},
+  {w:'頭啖湯',jp:'tau4 daam5 tong1',t:'先機／第一份好處',ex:'希望可以搶到頭啖湯！',exjp:'hei1 mong6 ho2 ji5 coeng2 dou3 tau4 daam5 tong1',ext:'希望能搶到第一份好處！',a:'005',ea:'018'},
+  {w:'掂過碌蔗',jp:'dim6 gwo3 luk1 ze3',t:'非常順利（比蔗還順）',ex:'祝你順利，掂過碌蔗！',exjp:'zuk1 nei5 seon6 lei6, dim6 gwo3 luk1 ze3',ext:'祝你順利，比甘蔗還順！',a:'006',ea:'019'},
+  {w:'夠薑',jp:'gau3 goeng1',t:'够胆量／有魄力',ex:'我準備夠薑啲，直接去搵佢哋個 CFO 傾。',exjp:'ngo5 zeon2 bei6 gau3 goeng1 di1, zik6 zip3 heoi3 wan2 keoi5 dei6 go3 CFO king1',ext:'我準備胆子大一點，直接去找他們的 CFO 商量。',a:'007',ea:'020'},
+  {w:'兩梳蕉',jp:'loeng5 so1 ziu1',t:'空手（兩手空空）',ex:'唔好又兩梳蕉咁直接上門呀！',exjp:'m4 hou2 jau6 loeng5 so1 ziu1 gam3 zik6 zip3 soeng5 mun4 aa3',ext:'不要又兩手空空就直接上門呀！',a:'008',ea:'021'},
+  {w:'大番薯',jp:'daai6 faan1 syu2',t:'糊塗蟲／傻瓜',ex:'我真係個大番薯！',exjp:'ngo5 zan1 hai6 go3 daai6 faan1 syu2',ext:'我真是個糊塗蟲！',a:'009',ea:'022'},
+  {w:'金叵羅',jp:'gam1 bo2 lo4',t:'掌上明珠／寶貝',ex:'佢係佢哋屋企嘅金叵羅。',exjp:'keoi5 hai6 keoi5 dei6 uk1 kei2 ge3 gam1 bo2 lo4',ext:'他是他們家的掌上明珠。',a:'010',ea:'023'},
+  {w:'包雲吞',jp:'baau1 wan4 tan1',t:'打噴嚏（歇後語）',ex:'見你成朝都喺度包雲吞。',exjp:'gin3 nei5 seng4 ziu1 dou1 hai2 dou6 baau1 wan4 tan1',ext:'看你整個早上都在打噴嚏。',a:'011',ea:'024'},
+  {w:'失禮',jp:'sat1 lai5',t:'丟臉／不好意思',ex:'我哋點都唔可以失禮㗎。',exjp:'ngo5 dei6 dim2 dou1 m4 ho2 ji5 sat1 lai5 gaa3',ext:'我們怎麼都不能失禮呀。',a:'012',ea:'025'},
+  {w:'唞吓',jp:'tau3 haa5',t:'休息一下',ex:'你喺屋企唞吓啦。',exjp:'nei5 hai2 uk1 kei2 tau3 haa5 laa1',ext:'你在家休息一下吧。',a:'013',ea:'026'}
+];
+
+/* === 对话一：返工收工（027-041） === */
+const dialogue1=[
+  {speaker:'A',phrases:[
+    {yue:'B，點解你今日苦瓜乾咁嘅樣啊？',jp:'bi1, dim2 gaai2 nei5 gam1 jat6 fu2 gwaa1 gon1 gam2 ge3 joeng6 aa3',t:'B，為什麼你今天愁眉苦臉的樣子呀？',a:'027'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'唔好提啦！',jp:'m4 hou2 tai4 laa1',t:'別提啦！',a:'028'},
+    {yue:'今朝趕住去見客，',jp:'gam1 ziu1 gun2 zyu6 heoi3 gin3 haak3',t:'今早趕著去見客戶，',a:'029'},
+    {yue:'點知冇車位咪唯有泊街，',jp:'dim2 zi1 mou5 ce1 wai2 mai6 wai4 jau5 paak3 gaai1',t:'誰知沒車位就只好停街邊，',a:'030'},
+    {yue:'結果收咗張牛肉乾呀！',jp:'git3 gwo2 sau1 zo2 zoeng1 ngau4 juk6 gon1 aa3',t:'結果被開了一張違例泊車告票！',a:'031'}
+  ]},
+  {speaker:'A',phrases:[
+    {yue:'慘！不過算啦，',jp:'caam2! bat1 gwo3 syun3 laa1',t:'慘！不過算啦，',a:'032'},
+    {yue:'好過做錯嘢被公司炒魷魚或者燉冬菇呀。',jp:'hou2 gwo3 zou6 co3 je5 bei2 gung1 si1 caau2 jau4 jyu4 waak6 ze2 dan6 dung1 gu1 aa3',t:'好過做錯事被公司解僱或者降職呀。',a:'033'},
+    {yue:'係呢，你聯營貸款項目嗰邊進展點樣？',jp:'hai6 ne1, nei5 lyun4 jing4 taai3 fun2 hong6 muk6 go2 bin1 zeon3 zin2 dim2 joeng6',t:'對了，你那個聯營貸款項目那邊進展怎樣？',a:'034'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'個客話要再考慮。',jp:'go3 haak3 waa6 jiu3 zoi3 haau2 leoi6',t:'客戶說要再考慮。',a:'035'},
+    {yue:'但我點會放棄？',jp:'daan6 ngo5 dim2 wui5 fong3 hei3',t:'但我怎會放棄？',a:'036'},
+    {yue:'我準備夠薑啲，直接去搵佢哋個 CFO 傾，',jp:'ngo5 zeon2 bei6 gau3 goeng1 di1, zik6 zip3 heoi3 wan2 keoi5 dei6 go3 CFO king1',t:'我準備胆子大一點，直接去找他們的 CFO 商量，',a:'037'},
+    {yue:'希望可以搶到頭啖湯！',jp:'hei1 mong6 ho2 ji5 coeng2 dou3 tau4 daam5 tong1',t:'希望能搶到第一份好處！',a:'038'}
+  ]},
+  {speaker:'A',phrases:[
+    {yue:'有魄力！點都好，',jp:'jau5 paak3 lik6! dim2 dou1 hou2',t:'有魄力！無論如何，',a:'039'},
+    {yue:'祝你順利，掂過碌蔗！',jp:'zuk1 nei5 seon6 lei6, dim6 gwo3 luk1 ze3',t:'祝你順利，比甘蔗還順！',a:'040'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'有好消息第一時間話你知！',jp:'jau5 hou2 si1 man4 dai6 jat1 si4 gaan1 waa6 nei5 zi1',t:'有好消息第一時間告訴你！',a:'041'}
+  ]}
+];
+
+/* === 对话二：去舅父屋企送礼（042-058） === */
+const dialogue2=[
+  {speaker:'A',phrases:[
+    {yue:'B，陣間去舅父屋企，',jp:'bi1, zan6 gaan1 heoi3 kau5 fu6 uk1 kei2',t:'B，待會去舅舅家，',a:'042'},
+    {yue:'你買咗禮物未呀？',jp:'nei5 maai5 zo2 lai5 mat6 mei6 aa3',t:'你買了禮物沒有呀？',a:'043'},
+    {yue:'唔好又兩梳蕉咁直接上門呀！',jp:'m4 hou2 jau6 loeng5 so1 ziu1 gam3 zik6 zip3 soeng5 mun4 aa3',t:'不要又兩手空空就直接上門呀！',a:'044'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'哎呀！我真係個大番薯，',jp:'aai1 aa1! ngo5 zan1 hai6 go3 daai6 faan1 syu2',t:'哎呀！我真是個糊塗蟲，',a:'045'},
+    {yue:'掛住打機完全忘記咗添！',jp:'gwaa3 zyu6 daa2 gei1 jyun4 cyun4 mong4 gei3 zo2 tim1',t:'顧著打遊戲完全忘記了！',a:'046'}
+  ]},
+  {speaker:'A',phrases:[
+    {yue:'點算呀你！',jp:'dim2 syun3 aa3 nei5',t:'你怎麼辦呀！',a:'047'},
+    {yue:'舅母個寶貝仔係佢哋屋企嘅金叵羅，',jp:'kau5 mou5 go3 bou2 gwai1 zai2 hai6 keoi5 dei6 uk1 kei2 ge3 gam1 bo2 lo4',t:'舅媽那個寶貝兒子是他們家的掌上明珠，',a:'048'},
+    {yue:'今次佢考第一，',jp:'gam1 ci3 keoi5 haau5 dai6 jat1',t:'這次他考第一，',a:'049'},
+    {yue:'我哋點都唔可以失禮㗎。',jp:'ngo5 dei6 dim2 dou1 m4 ho2 ji5 sat1 lai5 gaa3',t:'我們怎麼都不能失禮呀。',a:'050'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'好啦好啦，我依家即刻落樓買盒餅。',jp:'hou2 laa1 hou2 laa1, ngo5 ji1 gaa1 zik1 hak1 lok6 lau4 maai5 hap6 beng2',t:'好啦好啦，我現在立刻下樓買盒餅。',a:'051'},
+    {yue:'你個感冒好啲未呀？',jp:'nei5 go3 gam2 mou6 hou2 di1 mei6 aa3',t:'你那感冒好點沒有呀？',a:'052'},
+    {yue:'見你成朝都喺度包雲吞。',jp:'gin3 nei5 seng4 ziu1 dou1 hai2 dou6 baau1 wan4 tan1',t:'看你整個早上都在打噴嚏。',a:'053'}
+  ]},
+  {speaker:'A',phrases:[
+    {yue:'未呀，個頭仲好暈。',jp:'mei6 aa3, go3 tau4 zung6 hou2 wan4',t:'還沒呀，頭還很暈。',a:'054'},
+    {yue:'你快啲去買啦，',jp:'nei5 faai3 di1 heoi3 maai5 laa1',t:'你快點去買啦，',a:'055'},
+    {yue:'買完我哋早啲出門！',jp:'maai5 jyun4 ngo5 dei6 zou2 di1 ceot1 mun4',t:'買完我們早點出門！',a:'056'}
+  ]},
+  {speaker:'B',phrases:[
+    {yue:'你喺屋企唞吓啦，',jp:'nei5 hai2 uk1 kei2 tau3 haa5 laa1',t:'你在家休息一下吧，',a:'057'},
+    {yue:'我買完禮物自己過去。',jp:'ngo5 maai5 jyun4 lai5 mat6 zi6 gei2 gwo3 heoi3',t:'我買完禮物自己過去。',a:'058'}
+  ]}
+];
+
+/* === 渲染 === */
+function renderWords(){
+  var html='';
+  words.forEach(function(w,i){
+    html+='<div class="wrow">'
+      +'<div class="w-head" onclick="playWord('+i+')"><span class="w-word">'+w.w+'</span><span class="w-jp">'+w.jp+'</span><span class="w-t">'+w.t+'</span><button class="wb" id="wb-'+i+'" onclick="event.stopPropagation();playWord('+i+')">▶</button></div>'
+      +'<div class="w-ex" id="wex-'+i+'" onclick="playWordEx('+i+')"><div class="w-ex-c"><div class="w-ex-y">'+w.ex+'</div><div class="w-ex-j">'+w.exjp+'</div><div class="w-ex-t">'+w.ext+'</div></div><button class="wb" onclick="event.stopPropagation();playWordEx('+i+')">▶</button></div>'
+      +'</div>';
+  });
+  document.getElementById('wlist').innerHTML=html;
+}
+
+function renderDlg(dlgArr,containerId){
+  var html='';
+  dlgArr.forEach(function(turn,ti){
+    var cls=turn.speaker==='B'?' l':'';
+    html+='<div class="turn'+cls+'"><div class="th"><div class="spk"><span class="dot">'+turn.speaker+'</span>'+turn.speaker+'</div><button class="btn-turn" onclick="playTurn(\''+containerId+'\','+ti+')">▶ 整段朗讀</button></div>';
+    turn.phrases.forEach(function(p,pi){
+      html+='<div class="ph" data-c="'+containerId+'" data-t="'+ti+'" data-p="'+pi+'" onclick="playPhrase(\''+containerId+'\','+ti+','+pi+')"><div class="ph-c"><div class="ph-y">'+p.yue+'</div><div class="ph-j">'+p.jp+'</div><div class="ph-t">'+p.t+'</div></div><button class="pb" onclick="event.stopPropagation();playPhrase(\''+containerId+'\','+ti+','+pi+')">▶</button></div>';
+    });
+    html+='</div>';
+  });
+  document.getElementById(containerId).innerHTML=html;
+}
+var dlgMap={'dlg1':dialogue1,'dlg2':dialogue2};
+renderWords();
+renderDlg(dialogue1,'dlg1');
+renderDlg(dialogue2,'dlg2');
+
+/* === 音频播放（预生成 mp3，微信可用） === */
+var player=document.getElementById('player');
+var isPlayingAll=false,allSeq=[],allIdx=0;
+var curEl=null,curBtn=null;
+
+function buildSeq(){
+  allSeq=[];
+  for(var cid in dlgMap){
+    var arr=dlgMap[cid];
+    for(var t=0;t<arr.length;t++)
+      for(var p=0;p<arr[t].phrases.length;p++)
+        allSeq.push({cid:cid,ti:t,pi:p});
+  }
+}
+buildSeq();
+
+function clearHL(){
+  var sels=['.ph.on','.pb.on','.w-ex.on','.wb.on'];
+  sels.forEach(function(s){
+    var on=document.querySelectorAll(s);
+    for(var i=0;i<on.length;i++)on[i].classList.remove('on');
+  });
+  curEl=null;curBtn=null;
+}
+
+/* 播放单个音频：src + 高亮元素 + 结束回调（序列播放用） */
+function playAudio(id,el,btn,onEnd){
+  clearHL();
+  player.pause();
+  try{player.currentTime=0;}catch(e){}
+  player.src='audio/'+id+'.mp3';
+  try{player.playbackRate=parseFloat(document.getElementById('speed').value);}catch(e){}
+  if(el){el.classList.add('on');curEl=el;}
+  if(btn){btn.classList.add('on');curBtn=btn;}
+  player.onended=function(){
+    if(el)el.classList.remove('on');
+    if(btn)btn.classList.remove('on');
+    if(onEnd)onEnd();
+  };
+  player.onerror=function(){
+    if(el)el.classList.remove('on');
+    if(btn)btn.classList.remove('on');
+    if(onEnd)onEnd();
+  };
+  player.play().catch(function(){
+    if(el)el.classList.remove('on');
+    if(btn)btn.classList.remove('on');
+    if(onEnd)onEnd();
+  });
+}
+
+function stopAll(){
+  player.pause();
+  player.onended=null;
+  player.onerror=null;
+  clearHL();
+}
+
+function playWord(i){
+  if(isPlayingAll)toggleAll();
+  var b=document.getElementById('wb-'+i);
+  if(!b)return;
+  playAudio(words[i].a,null,b);
+}
+
+function playWordEx(i){
+  if(isPlayingAll)toggleAll();
+  var ex=document.getElementById('wex-'+i);
+  if(!ex)return;
+  var b=ex.querySelector('.wb');
+  playAudio(words[i].ea,ex,b);
+}
+
+function playPhrase(cid,ti,pi){
+  if(isPlayingAll)toggleAll();
+  var ph=document.querySelector('[data-c="'+cid+'"][data-t="'+ti+'"][data-p="'+pi+'"]');
+  if(!ph)return;
+  var pb=ph.querySelector('.pb');
+  playAudio(dlgMap[cid][ti].phrases[pi].a,ph,pb);
+}
+
+/* 序列播放 */
+function playSeq(items,idx){
+  if(idx>=items.length)return;
+  var it=items[idx];
+  playAudio(it.id,it.el,it.btn,function(){
+    idx++;
+    if(idx<items.length){
+      setTimeout(function(){playSeq(items,idx);},300);
+    }else if(it.done){
+      it.done();
+    }
+  });
+}
+
+function playTurn(cid,ti){
+  if(isPlayingAll)toggleAll();
+  var turn=dlgMap[cid][ti];
+  var items=turn.phrases.map(function(p,pi){
+    var ph=document.querySelector('[data-c="'+cid+'"][data-t="'+ti+'"][data-p="'+pi+'"]');
+    return {id:p.a,el:ph,btn:ph?ph.querySelector('.pb'):null};
+  });
+  playSeq(items,0);
+}
+
+function toggleAll(){
+  if(isPlayingAll){
+    isPlayingAll=false;allIdx=0;stopAll();
+    var b=document.getElementById('btnAll');
+    b.textContent='▶ 全部朗讀';b.classList.remove('on');
+    return;
+  }
+  isPlayingAll=true;allIdx=0;
+  var b=document.getElementById('btnAll');
+  b.textContent='■ 停止朗讀';b.classList.add('on');
+  function next(){
+    if(!isPlayingAll)return;
+    if(allIdx>=allSeq.length){
+      isPlayingAll=false;b.textContent='▶ 全部朗讀';b.classList.remove('on');return;
+    }
+    var item=allSeq[allIdx];
+    var ph=document.querySelector('[data-c="'+item.cid+'"][data-t="'+item.ti+'"][data-p="'+item.pi+'"]');
+    if(!ph){allIdx++;setTimeout(next,50);return;}
+    var p=dlgMap[item.cid][item.ti].phrases[item.pi];
+    ph.scrollIntoView({behavior:'smooth',block:'center'});
+    playAudio(p.a,ph,ph.querySelector('.pb'),function(){
+      allIdx++;
+      if(isPlayingAll)setTimeout(next,400);
+    });
+  }
+  next();
+}
+
+try{
+  document.getElementById('speed').addEventListener('input',function(){
+    document.getElementById('speedVal').textContent=parseFloat(this.value).toFixed(2)+'x';
+    try{player.playbackRate=parseFloat(this.value);}catch(e){}
+  });
+}catch(e){}
+</script>
+</body>
+</html>
