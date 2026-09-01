@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" no-cache">
+<meta http-equiv="Expires" content="0">
+<title>粵語發音練習 · 職場・日常・出行常用詞彙</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#1565C0;--blue-d:#0D47A1;--blue-l:#E3F2FD;--blue-xl:#F5F9FD;
+  --accent:#0288D1;--orange:#E65100;--teal:#00897B;--text:#1a1a1a;--text-l:#666;--border:#E0E0E0;--white:#fff;
+  --shadow:0 1px 6px rgba(0,0,0,.05);
+}
+body{font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(--blue-xl);color:var(--text);line-height:1.6;min-height:100vh}
+header{background:linear-gradient(135deg,var(--blue),var(--blue-d));color:#fff;padding:26px 20px;text-align:center;box-shadow:0 2px 12px rgba(21,101,192,.2)}
+header h1{font-size:1.55rem;margin-bottom:4px;letter-spacing:.5px}
+header p{font-size:.88rem;opacity:.9}
+header .pill{display:inline-block;background:rgba(255,255,255,.18);padding:2px 10px;border-radius:12px;font-size:.72rem;margin:0 3px}
+.controls{max-width:760px;margin:16px auto;padding:0 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.cg{display:flex;align-items:center;gap:8px;background:#fff;padding:7px 14px;border-radius:20px;box-shadow:var(--shadow)}
+.cg label{font-size:.82rem;color:var(--text-l);white-space:nowrap}
+input[type=range]{accent-color:var(--blue);width:90px}
+#speedVal{font-size:.8rem;color:var(--blue);min-width:32px}
+.btn-all{background:var(--blue);color:#fff;border:none;padding:9px 22px;border-radius:20px;font-size:.88rem;cursor:pointer;transition:.2s;white-space:nowrap}
+.btn-all:hover{background:var(--blue-d);transform:translateY(-1px)}
+.btn-all.on{background:#E53935}
+main{max-width:760px;margin:0 auto;padding:0 16px 10px}
+.sec-title{display:flex;align-items:center;gap:10px;margin:22px 0 12px;font-size:1rem;font-weight:700;color:var(--blue-d)}
+.sec-title .n{width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700}
+.sec-title .sub{font-size:.74rem;font-weight:400;color:var(--text-l)}
+/* 单词表 */
+.wcard{background:#fff;border-radius:12px;padding:6px 16px;box-shadow:var(--shadow);margin-bottom:14px}
+.wrow{padding:12px 4px;border-bottom:1px dashed var(--border)}
+.wrow:last-child{border-bottom:none}
+.w-head{display:flex;align-items:center;gap:10px;cursor:pointer}
+.w-word{font-size:1.18rem;font-weight:600;color:var(--blue-d);min-width:80px}
+.w-jp{font-size:.84rem;color:var(--blue);font-family:"SF Mono",Menlo,monospace;letter-spacing:.3px;min-width:88px}
+.w-t{font-size:.82rem;color:var(--text-l);flex:1}
+.wb{flex-shrink:0;width:32px;height:32px;border-radius:50%;border:none;background:var(--blue-l);color:var(--blue);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:.2s}
+.wb:hover{background:var(--blue);color:#fff;transform:scale(1.1)}
+.wb.on{background:var(--blue);color:#fff;animation:pulse 1s infinite}
+.ex-block{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.ex{background:var(--blue-xl);border-radius:8px;padding:8px 10px;cursor:pointer;transition:background .2s;position:relative}
+.ex:hover{background:var(--blue-l)}
+.ex.on{background:var(--blue-l);box-shadow:inset 3px 0 0 var(--blue)}
+.ex-tag{display:inline-block;font-size:.68rem;background:var(--blue);color:#fff;padding:1px 7px;border-radius:8px;margin-right:5px;vertical-align:middle;font-weight:600}
+.ex-tag.work{background:var(--teal)}
+.ex-y{font-size:.92rem;margin-bottom:2px}
+.ex-j{font-size:.74rem;color:var(--blue);font-family:"SF Mono",Menlo,monospace;margin-bottom:2px;letter-spacing:.2px}
+.ex-t{font-size:.74rem;color:var(--text-l)}
+.ex-play{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;border:none;background:transparent;color:var(--blue);cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center}
+.ex-play:hover{background:var(--blue);color:#fff}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tip{max-width:760px;margin:0 auto;padding:6px 16px 30px}
+.tip-box{background:#FFF8E1;border-left:3px solid #F9A825;border-radius:10px;padding:14px 18px;font-size:.82rem;color:var(--text-l);line-height:1.75}
+.tip-box b{color:#E65100}
+footer{text-align:center;padding:16px;color:var(--text-l);font-size:.78rem}
+@media(max-width:560px){
+  header h1{font-size:1.3rem}
+  .ex-block{grid-template-columns:1fr}
+  .w-word{font-size:1.05rem;min-width:64px}
+  .w-jp{font-size:.78rem;min-width:74px}
+  .controls{justify-content:center}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>粵語發音練習 · 職場・日常・出行常用詞彙</h1>
+  <p><span class="pill">三組單詞</span><span class="pill">職場 + 生活例句</span><span class="pill">電腦・手機可讀</span></p>
+</header>
+
+<div class="controls">
+  <div class="cg"><label>語速</label><input type="range" id="speed" min="0.5" max="1.2" step="0.05" value="0.8"><span id="speedVal">0.80x</span></div>
+  <button class="btn-all" id="btnAll" onclick="toggleAll()">▶ 全部朗讀</button>
+</div>
+
+<main>
+  <div class="sec-title"><span class="n">①</span>職場常見詞彙<span class="sub">第 1 組 · 9 個詞</span></div>
+  <div class="wcard" id="r1"></div>
+
+  <div class="sec-title"><span class="n">②</span>日常難搞詞彙<span class="sub">第 2 組 · 6 個詞</span></div>
+  <div class="wcard" id="r2"></div>
+
+  <div class="sec-title"><span class="n">③</span>澳門出行常用詞<span class="sub">第 3 組 · 6 個詞</span></div>
+  <div class="wcard" id="r3"></div>
+</main>
+
+<div class="tip">
+  <div class="tip-box">
+    <b>發音要點：</b><br>
+    • <b>「住」讀 zyu6</b>，係粵語動詞尾，常見「<b>趕住</b>交報告」「<b>阻住</b>同事」；亦寫作「𡿨」<br>
+    • <b>「搞掂」</b>嘅「<b>掂</b>」讀 <b>dim6</b>（順利、妥當），唔係 dim2（= 點）<br>
+    • <b>「頭痕」tau4 han4</b>＝ 比喻事情棘手／令人頭疼，唔係「身體痕癢」嘅「痕」<br>
+    • <b>「唔湯唔水」</b>字面讀 <b>m4 tong1 m4 seoi2</b>，比喻不上不下、進退兩難<br>
+    • <b>「泊車」</b>嘅「<b>泊</b>」讀 <b>paak3</b>（入聲、短促）<br>
+    • <b>「行」haang4</b> ＝ 走路（唔係英文 hang）；「<b>就嚟</b>」zau6 lai4 ＝ 快要<br>
+    • <b>句末語氣詞</b>「㗎／喎／咋／啦」音高變化會改變語氣，建議跟讀模仿<br>
+    <br>
+    <b>待你確認（圖片疑似輸入誤差）：</b><br>
+    • 第②組「<b>卞份工對佢嚟講幾吃力</b>」——「卞」字粵語無此讀法，<b>高度疑似「甚」(sam6)</b>，即「哪份／那份工」。請確認<br>
+    • 第①組「<b>得閒一齊去 𠼱㓥 食嘢</b>」——「𠼱㓥」係粵語罕用俗字，本字讀法存疑，<b>常見口音接近 daap3 ding6</b>，需你確認讀音<br>
+    • 第③組「<b>行閘閂過閘好逼</b>」——連續「閘閂」語境不太順，<b>疑似「過閘過閘好逼」或「過閘好逼」</b>，請確認原意<br>
+    <br>
+    <b>學習建議：</b>先聽單詞讀音，再點例句讀句子模仿；全部朗讀會依序讀「<b>① 職場→② 日常→③ 出行</b>」每個單詞 + 兩條例句。本頁為<b>線上可分享版</b>（預生成粵語 MP3），手機瀏覽器或微信直接打開本連結即可發聲，可轉發到微信群。
+  </div>
+</div>
+
+<footer>點擊單詞行或例句即可朗讀 · 建議使用 Safari 或 Chrome 瀏覽器</footer>
+
+<script>
+/* =========================================================
+ * Round 1 — 職場常見詞彙（圖 1）
+ * ========================================================= */
+const r1 = [
+  {w:'傾偈',   jp:'king1 gai2',          t:'聊天、閒聊',
+    ex1:{yue:'得閒可以同合規部同事傾偈，了解審批要求。', jp:'dak1 haan4 ho2 ji5 tung4 hap6 kwai1 bou6 tung4 si1 king1 gai2, liu5 gaai2 sam5 pai2 jiu1 kau4.', t:'有空可以跟合規部同事聊聊，了解審批要求。'},
+    ex2:{yue:'放工之後同朋友傾偈傾到好夜。', jp:'fong3 gung1 zi1 hau6 tung4 pung4 jau5 king1 gai2 king1 dou3 hou2 je6.', t:'下班之後跟朋友閒聊聊到很晚。'}
+  },
+  {w:'得閒',   jp:'dak1 haan4',          t:'有空、得空',
+    ex1:{yue:'你得閒嘅時候睇吓呢份文件。', jp:'nei5 dak1 haan4 ge3 si4 hau6 tai2 haa5 ni1 fan6 man4 gin2.', t:'你有空的時候看看這份文件。'},
+    ex2:{yue:'得閒一齊去𠼱㓥食嘢。', jp:'dak1 haan4 jat1 cai4 heoi3 daap3 ding6 sik6 je5. ※讀音存疑', t:'有空一起去吃飯（俾飯/食飯之俗字）。'}
+  },
+  {w:'忙到死', jp:'mong4 dou3 sei2',     t:'忙得要命',
+    ex1:{yue:'今個禮拜季結，忙到死。', jp:'gam1 go3 lai5 baai3 gwai3 git3, mong4 dou3 sei2.', t:'這個禮拜季度結算，忙得要命。'},
+    ex2:{yue:'最近搬屋好多嘢執，忙到死。', jp:'zeoi3 gan6 bun1 uk1 hou2 do1 je5 zap1, mong4 dou3 sei2.', t:'最近搬家好多東西要收拾，忙得要命。'}
+  },
+  {w:'手頭',   jp:'sau2 tau4',           t:'手上（手頭的工作）',
+    ex1:{yue:'我手頭仲有三個貸款要處理。', jp:'ngo5 sau2 tau4 zung6 jau5 saam1 go3 foon3 kyun2 jiu3 cyu5 lei5.', t:'我手上還有三筆貸款要處理。'},
+    ex2:{yue:'我要做埋啲手頭家務先得啦。', jp:'ngo5 jiu3 zou6 maai4 di1 sau2 tau4 gaa1 mou6 sin1 dak1 laa1.', t:'我要把手上那些家務先做完才行。'}
+  },
+  {w:'趕住',   jp:'gon2 zyu6',           t:'趕著、急於',
+    ex1:{yue:'我趕住交報告，唔可以遲。', jp:'ngo5 gon2 zyu6 gaau1 bou3 gou3, m4 ho2 ji5 ci4.', t:'我趕著交報告，不能遲。'},
+    ex2:{yue:'趕住搭巴士，唔同你講咁多。', jp:'gon2 zyu6 daap3 baa1 si2, m4 tung4 nei5 gong2 gam2 do1.', t:'趕著搭公交，不跟你多說了。'}
+  },
+  {w:'搞掂',   jp:'gaau2 dim6',          t:'搞定、辦妥',
+    ex1:{yue:'呢單開戶手續已經搞掂。', jp:'ni1 daan1 hoi1 wu6 sau2 zuk6 ji5 ging1 gaau2 dim6.', t:'這筆開戶手續已經辦妥。'},
+    ex2:{yue:'屋企裝修已經搞掂晒。', jp:'uk1 kei2 zong1 sau1 ji5 ging1 gaau2 dim6 saai3.', t:'家裡裝修已經全搞定了。'}
+  },
+  {w:'阻住',   jp:'zo2 zyu6',            t:'耽誤、妨礙',
+    ex1:{yue:'唔好阻住同事做嘢。', jp:'m4 hou2 zo2 zyu6 tung4 si1 zou6 je5.', t:'別耽誤同事工作。'},
+    ex2:{yue:'唔好阻住人哋排隊。', jp:'m4 hou2 zo2 zyu6 jan4 dei6 paai4 deoi6.', t:'別妨礙別人排隊。'}
+  },
+  {w:'返得切', jp:'faan1 dak1 cit3',     t:'趕得及',
+    ex1:{yue:'五點半之前返得切返公司。', jp:'ng5 dim2 bun3 zi1 cin4 faan1 dak1 cit3 faan1 gung1 si1.', t:'五點半之前趕得回公司。'},
+    ex2:{yue:'返得切屋企睇八點嘅港姐選舉。', jp:'faan1 dak1 cit3 uk1 kei2 tai2 baat3 dim2 ge3 gong2 ze1 syun2 geoi2.', t:'趕得回家看八點的港姐選舉。'}
+  },
+  {w:'返唔切', jp:'faan1 m4 dak1 cit3',  t:'趕不及',
+    ex1:{yue:'會議三點開始，我返唔切。', jp:'wui2 keoi5 saam1 dim2 hoi1 ci2, ngo5 faan1 m4 dak1 cit3.', t:'會議三點開始，我趕不及。'},
+    ex2:{yue:'唔使等我食飯，我返唔切啦。', jp:'m4 sai2 dang2 ngo5 sik6 faan6, ngo5 faan1 m4 dak1 cit3 laa1.', t:'不用等我吃飯，我趕不上了。'}
+  }
+];
+
+/* =========================================================
+ * Round 2 — 日常難搞詞彙（圖 2）
+ * ========================================================= */
+const r2 = [
+  {w:'吃力',         jp:'cak1 lik6',                       t:'費勁、吃力',
+    ex1:{yue:'呢單業務係會做得比較吃力。', jp:'ni1 daan1 jip6 mou6 hai6 wui5 zou6 dak1 bi2 gaau3 cak1 lik6.', t:'這筆業務做起來會比較吃力。'},
+    ex2:{yue:'卞份工對佢嚟講幾吃力。', jp:'※讀音存疑 — 疑為「甚份工」 sam6 fan6 gung1 deoi3 keoi5 lai4 gong2 gei2 cak1 lik6.', t:'這份工作對他來說相當吃力。'}
+  },
+  {w:'順手',         jp:'seon6 sau2',                      t:'順便、順手',
+    ex1:{yue:'順手幫我印埋呢份資料。', jp:'seon6 sau2 bong1 ngo5 jan3 maai4 ni1 fan6 zi1 liu2.', t:'順便幫我印完這份資料。'},
+    ex2:{yue:'順手買支水返屋企。', jp:'seon6 sau2 maai5 zi1 seoi2 faan1 uk1 kei2.', t:'順手買瓶水回家。'}
+  },
+  {w:'頭痕',         jp:'tau4 han4',                       t:'頭痛、令人頭疼（比喻事情棘手）',
+    ex1:{yue:'呢個 case 有啲難搞，好頭痕。', jp:'ni1 go3 case jau5 di1 naan4 gaau2, hou2 tau4 han4.', t:'這個案子有點棘手，讓人頭疼。'},
+    ex2:{yue:'見到一堆家務就頭痕。', jp:'gin3 dou2 jat1 deoi1 gaa1 mou6 zau6 tau4 han4.', t:'看到一堆家務就頭疼。'}
+  },
+  {w:'唔湯唔水',    jp:'m4 tong1 m4 seoi2',               t:'不上不下、進退兩難',
+    ex1:{yue:'個項目依家唔湯唔水，再唔追進度就趕唔切下個月出。', jp:'go3 hong6 mut6 ji1 gaa1 m4 tong1 m4 seoi2, zoi3 m4 zeoi1 zeon3 dou6 zau6 gon2 m4 dak1 cit3 haa6 go3 jyut6 ceot1.', t:'這個項目不上不下，再不追進度就趕不及下個月上線。'},
+    ex2:{yue:'時間唔湯唔水，不知去唔去好。', jp:'si4 gaan3 m4 tong1 m4 seoi2, bat1 zi1 heoi3 m4 heoi3 hou2.', t:'時間不上不下，不知去好還是不去好。'}
+  },
+  {w:'夠鐘',         jp:'gau3 zung1',                      t:'到點、時間到',
+    ex1:{yue:'夠鐘收工啦。', jp:'gau3 zung1 sau1 gung1 laa1.', t:'到點下班了。'},
+    ex2:{yue:'夠鐘開會，大家坐好。', jp:'gau3 zung1 hoi1 wui2, daai6 gaa1 co5 hou2.', t:'到點開會，大家坐好。'}
+  },
+  {w:'趕頭趕命',    jp:'gon2 tau4 gon2 meng6',            t:'急急忙忙',
+    ex1:{yue:'每次都臨急臨忙先嚟話開會，搞到個個都趕頭趕命！', jp:'mui5 ci3 dou1 lam4 gap1 lam4 mong4 sin1 lai4 waa6 hoi1 wui2, gaau2 dou3 go3 go3 dou1 gon2 tau4 gon2 meng6!', t:'每次都臨時才說要開會，搞得人人都急急忙忙！'},
+    ex2:{yue:'每次都趕頭趕命，你唔可以早啲出門口嘅咩？', jp:'mui5 ci3 dou1 gon2 tau4 gon2 meng6, nei5 m4 ho2 ji5 zou2 di1 ceot1 mun4 hau2 ge3 me1?', t:'每次都急急忙忙，你能不能早點出門啊？'}
+  }
+];
+
+/* =========================================================
+ * Round 3 — 澳門出行常用詞（圖 3）
+ * ========================================================= */
+const r3 = [
+  {w:'逼',       jp:'bik1',           t:'擁擠',
+    ex1:{yue:'放工時間架架巴士都好逼。', jp:'fong3 gung1 si4 gaan3 gaa3 gaa3 baa1 si2 dou1 hou2 bik1.', t:'下班時間每輛巴士都很擠。'},
+    ex2:{yue:'行閘閂過閘好逼。', jp:'※「閘閂」疑為「過閘」之誤 haang4 gwo3 zaap6 hou2 bik1.', t:'過閘的時候很擠。'}
+  },
+  {w:'行快啲',  jp:'haang4 faai3 di1',t:'走快一點',
+    ex1:{yue:'行快啲，開會唔好遲到。', jp:'haang4 faai3 di1, hoi1 wui2 m4 hou2 ci4 dou3.', t:'走快點，開會別遲到。'},
+    ex2:{yue:'行快啲，巴士就嚟開。', jp:'haang4 faai3 di1, baa1 si2 zau6 lai4 hoi1.', t:'走快點，巴士就快開了。'}
+  },
+  {w:'就嚟',    jp:'zau6 lai4',       t:'快要、馬上',
+    ex1:{yue:'會議就嚟開始。', jp:'wui2 keoi5 zau6 lai4 hoi1 ci2.', t:'會議馬上開始。'},
+    ex2:{yue:'就嚟落雨啦。', jp:'zau6 lai4 lok6 jyu5 laa1.', t:'快下雨了。'}
+  },
+  {w:'搵位',    jp:'wan2 wai6',       t:'找位置（停車／座位）',
+    ex1:{yue:'澳門街好難搵位泊車。', jp:'ou3 mun4 gaai1 hou2 naan4 wan2 wai6 paak3 ce1.', t:'澳門街頭很難找停車位。'},
+    ex2:{yue:'我嚟拎嘢食你去搵位先。', jp:'ngo5 lai4 ling1 je5 sik6 nei5 heoi3 wan2 wai6 sin1.', t:'我來拿東西吃，你先去找位置。'}
+  },
+  {w:'泊車',    jp:'paak3 ce1',       t:'停車',
+    ex1:{yue:'置地嗰頭啲泊車位唔多。', jp:'zi3 dei6 go2 tau4 di1 paak3 ce1 wai2 m4 do1.', t:'置地那邊的停車位不多。'},
+    ex2:{yue:'你哋落車先，我泊埋車就過嚟。', jp:'nei5 dei6 lok6 ce1 sin1, ngo5 paak3 maai4 ce1 zau6 gwo3 lai4.', t:'你們先下車，我停好車就過來。'}
+  },
+  {w:'轉車',    jp:'zyun2 ce1',       t:'轉乘、換車',
+    ex1:{yue:'要轉兩次車先去到總行。', jp:'jiu3 zyun2 loeng5 ci3 ce1 sin1 heoi3 dou3 zung2 hong4.', t:'要轉兩次車才到總行。'},
+    ex2:{yue:'搭賭場巴過去就唔使轉車啦。', jp:'daap3 dou2 coeng4 baa1 gwo3 heoi3 zau6 m4 sai2 zyun2 ce1 laa1.', t:'搭賭場巴士過去就不用轉車了。'}
+  }
+];
+
+/* === 渲染 === */
+function esc(s){return String(s).replace(/'/g,"\\'")}
+function renderRound(data, gid){
+  var html='';
+  data.forEach(function(w,i){
+    var id='r'+gid+'-'+i;
+    var wordJson=JSON.stringify(w).replace(/'/g,"&#39;");
+    html+='<div class="wrow">'
+      +'<div class="w-head" data-id="'+id+'" data-action="word" onclick="playWord('+gid+','+i+')">'
+      +'<span class="w-word">'+w.w+'</span>'
+      +'<span class="w-jp">'+w.jp+'</span>'
+      +'<span class="w-t">'+w.t+'</span>'
+      +'<button class="wb" id="wb-'+id+'" onclick="event.stopPropagation();playWord('+gid+','+i+')">▶</button>'
+      +'</div>'
+      +'<div class="ex-block">'
+      +'<div class="ex" id="ex1-'+id+'" data-id="'+id+'" data-action="ex1" onclick="playEx('+gid+','+i+',1)">'
+      +'<span class="ex-tag work">職場</span>'
+      +'<div class="ex-y">'+w.ex1.yue+'</div>'
+      +'<div class="ex-j">'+w.ex1.jp+'</div>'
+      +'<div class="ex-t">'+w.ex1.t+'</div>'
+      +'<button class="ex-play" onclick="event.stopPropagation();playEx('+gid+','+i+',1)">▶</button>'
+      +'</div>'
+      +'<div class="ex" id="ex2-'+id+'" data-id="'+id+'" data-action="ex2" onclick="playEx('+gid+','+i+',2)">'
+      +'<span class="ex-tag">生活</span>'
+      +'<div class="ex-y">'+w.ex2.yue+'</div>'
+      +'<div class="ex-j">'+w.ex2.jp+'</div>'
+      +'<div class="ex-t">'+w.ex2.t+'</div>'
+      +'<button class="ex-play" onclick="event.stopPropagation();playEx('+gid+','+i+',2)">▶</button>'
+      +'</div>'
+      +'</div>'
+      +'</div>';
+  });
+  document.getElementById('r'+gid).innerHTML=html;
+}
+renderRound(r1,1);
+renderRound(r2,2);
+renderRound(r3,3);
+
+/* === 語音合成 === */
+/* === 音頻播放：預生成 mp3，免疫 iframe 靜音（不依賴 Web Speech） === */
+var curAudio=null;
+function audioSrc(gid,idx,kind){
+  // kind: 'word' | 'ex1' | 'ex2'
+  if(kind==='word') return 'cantonese_audio/word_'+gid+'_'+idx+'.mp3';
+  return 'cantonese_audio/ex_'+gid+'_'+idx+'_'+(kind==='ex1'?1:2)+'.mp3';
+}
+function clearHL(){
+  document.querySelectorAll('.wb.on,.ex.on').forEach(function(e){e.classList.remove('on')});
+}
+function playAudio(src,onEnd){
+  try{ if(curAudio){curAudio.pause();curAudio=null;} }catch(e){}
+  var a=new Audio(src);
+  a.playbackRate=parseFloat(document.getElementById('speed').value)||1;
+  a.onended=function(){ if(onEnd)onEnd(); };
+  a.onerror=function(){ if(onEnd)onEnd(); };
+  curAudio=a;
+  var pr=a.play();
+  if(pr&&pr.catch)pr.catch(function(){ if(onEnd)onEnd(); });
+}
+
+function getWord(gid,idx){
+  return gid===1?r1: gid===2?r2: r3;
+}
+
+/* === 朗讀單詞（點整行 / 點 ▶ 讀：粵語 + 粵拼 + 釋義） === */
+function playWord(gid,idx){
+  if(window.isPlayingAll)toggleAll();
+  clearHL();
+  var data=getWord(gid,idx);
+  var b=document.getElementById('wb-r'+gid+'-'+idx);
+  if(b)b.classList.add('on');
+  playAudio(audioSrc(gid,idx,'word'),function(){if(b)b.classList.remove('on')});
+}
+
+/* === 朗讀例句 === */
+function playEx(gid,idx,n){
+  if(window.isPlayingAll)toggleAll();
+  clearHL();
+  var data=getWord(gid,idx);
+  var el=document.getElementById('ex'+n+'-r'+gid+'-'+idx);
+  if(el)el.classList.add('on');
+  playAudio(audioSrc(gid,idx,n===1?'ex1':'ex2'),function(){if(el)el.classList.remove('on')});
+}
+
+/* === 全部朗讀：依序 r1→r2→r3 → 每個詞先讀單詞再讀兩條例句 === */
+var allQueue=[];var allIdx=0;var isPlayingAll=false;
+
+function buildQueue(){
+  allQueue=[];
+  [r1,r2,r3].forEach(function(r,gid){
+    r.forEach(function(w,idx){
+      allQueue.push({kind:'word', gid:gid+1, idx:idx});
+      allQueue.push({kind:'ex1',  gid:gid+1, idx:idx});
+      allQueue.push({kind:'ex2',  gid:gid+1, idx:idx});
+    });
+  });
+}
+buildQueue();
+
+function toggleAll(){
+  var btn=document.getElementById('btnAll');
+  if(isPlayingAll){
+    if(curAudio){try{curAudio.pause();}catch(e){}}
+    isPlayingAll=false;allIdx=0;clearHL();
+    btn.textContent='▶ 全部朗讀';btn.classList.remove('on');
+    return;
+  }
+  isPlayingAll=true;allIdx=0;
+  btn.textContent='■ 停止朗讀';btn.classList.add('on');
+  nextAll();
+}
+
+function nextAll(){
+  if(!isPlayingAll)return;
+  if(allIdx>=allQueue.length){
+    isPlayingAll=false;
+    var btn=document.getElementById('btnAll');
+    btn.textContent='▶ 全部朗讀';btn.classList.remove('on');
+    clearHL();return;
+  }
+  var item=allQueue[allIdx];
+  var data=getWord(item.gid,item.idx);
+  clearHL();
+  var el,src;
+  if(item.kind==='word'){
+    el=document.getElementById('wb-r'+item.gid+'-'+item.idx);
+    if(el)el.classList.add('on');
+    src=audioSrc(item.gid,item.idx,'word');
+  } else if(item.kind==='ex1'){
+    el=document.getElementById('ex1-r'+item.gid+'-'+item.idx);
+    if(el){el.classList.add('on');el.scrollIntoView({behavior:'smooth',block:'center'})}
+    src=audioSrc(item.gid,item.idx,'ex1');
+  } else {
+    el=document.getElementById('ex2-r'+item.gid+'-'+item.idx);
+    if(el){el.classList.add('on');el.scrollIntoView({behavior:'smooth',block:'center'})}
+    src=audioSrc(item.gid,item.idx,'ex2');
+  }
+  playAudio(src,function(){
+    if(el)el.classList.remove('on');
+    allIdx++;
+    if(isPlayingAll)setTimeout(nextAll,250);
+  });
+}
+
+try{
+  document.getElementById('speed').addEventListener('input',function(){
+    document.getElementById('speedVal').textContent=parseFloat(this.value).toFixed(2)+'x';
+  });
+}catch(e){}
+</script>
+</body>
+</html>
