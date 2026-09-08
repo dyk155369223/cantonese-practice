@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>粵語發音練習 · 職場俗語（豬隊友・出糧・炒魷魚）</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --wine:#A01B3C;--wine-d:#7A0F2B;--wine-l:#FDE7EC;--wine-xl:#FEF7F9;
+  --accent:#C2185B;--teal:#00897B;--gold:#F9A825;--text:#1a1a1a;--text-l:#666;--border:#E5E0E2;--white:#fff;
+  --shadow:0 1px 6px rgba(0,0,0,.06);
+}
+body{font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(--wine-xl);color:var(--text);line-height:1.6;min-height:100vh}
+header{background:linear-gradient(135deg,var(--wine),var(--wine-d));color:#fff;padding:26px 20px;text-align:center;box-shadow:0 2px 12px rgba(160,27,60,.22)}
+header h1{font-size:1.5rem;margin-bottom:5px;letter-spacing:.5px}
+header p{font-size:.86rem;opacity:.92}
+header .pill{display:inline-block;background:rgba(255,255,255,.18);padding:2px 10px;border-radius:12px;font-size:.72rem;margin:0 3px}
+.controls{max-width:780px;margin:16px auto;padding:0 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center}
+.cg{display:flex;align-items:center;gap:8px;background:#fff;padding:7px 14px;border-radius:20px;box-shadow:var(--shadow)}
+.cg label{font-size:.82rem;color:var(--text-l);white-space:nowrap}
+input[type=range]{accent-color:var(--wine);width:90px}
+#speedVal{font-size:.8rem;color:var(--wine);min-width:34px}
+.btn-all{background:var(--wine);color:#fff;border:none;padding:9px 22px;border-radius:20px;font-size:.88rem;cursor:pointer;transition:.2s;white-space:nowrap}
+.btn-all:hover{background:var(--wine-d);transform:translateY(-1px)}
+.btn-all.on{background:#E53935}
+main{max-width:780px;margin:0 auto;padding:0 16px 10px}
+.sec-title{display:flex;align-items:center;gap:10px;margin:22px 0 12px;font-size:1rem;font-weight:700;color:var(--wine-d)}
+.sec-title .n{width:26px;height:26px;border-radius:50%;background:var(--wine);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;flex-shrink:0}
+.sec-title .sub{font-size:.74rem;font-weight:400;color:var(--text-l)}
+.sec-title .btn-sec{margin-left:auto;background:var(--wine-l);color:var(--wine);border:none;padding:5px 14px;border-radius:16px;font-size:.76rem;cursor:pointer}
+.sec-title .btn-sec:hover{background:var(--wine);color:#fff}
+/* 句子卡片 */
+.scard{background:#fff;border-radius:12px;padding:4px 14px;box-shadow:var(--shadow);margin-bottom:12px}
+.srow{padding:12px 6px;border-bottom:1px dashed var(--border);cursor:pointer;position:relative;border-radius:8px;transition:background .18s}
+.srow:last-child{border-bottom:none}
+.srow:hover{background:var(--wine-xl)}
+.srow.on{background:var(--wine-l);box-shadow:inset 3px 0 0 var(--wine)}
+.s-no{display:inline-block;font-size:.66rem;background:var(--wine);color:#fff;padding:1px 7px;border-radius:8px;margin-right:6px;vertical-align:middle;font-weight:600}
+.s-y{font-size:1.02rem;line-height:1.7;margin-bottom:3px;padding-right:30px}
+.s-j{font-size:.78rem;color:var(--wine);font-family:"SF Mono",Menlo,monospace;letter-spacing:.2px;margin-bottom:3px}
+.s-t{font-size:.78rem;color:var(--text-l);line-height:1.6}
+.s-play{position:absolute;top:11px;right:6px;width:26px;height:26px;border-radius:50%;border:none;background:var(--wine-l);color:var(--wine);cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:.2s}
+.s-play:hover{background:var(--wine);color:#fff}
+.srow.on .s-play{background:var(--wine);color:#fff}
+/* 俗語表 */
+.wcard{background:#fff;border-radius:12px;padding:6px 16px;box-shadow:var(--shadow);margin-bottom:14px}
+.wrow{padding:11px 4px;border-bottom:1px dashed var(--border)}
+.wrow:last-child{border-bottom:none}
+.w-head{display:flex;align-items:center;gap:10px;cursor:pointer}
+.w-word{font-size:1.12rem;font-weight:600;color:var(--wine-d);min-width:86px}
+.w-jp{font-size:.82rem;color:var(--wine);font-family:"SF Mono",Menlo,monospace;letter-spacing:.3px;min-width:104px}
+.w-t{font-size:.82rem;color:var(--text-l);flex:1}
+.wb{flex-shrink:0;width:32px;height:32px;border-radius:50%;border:none;background:var(--wine-l);color:var(--wine);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:.2s}
+.wb:hover{background:var(--wine);color:#fff;transform:scale(1.1)}
+.wb.on{background:var(--wine);color:#fff;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tip{max-width:780px;margin:0 auto;padding:6px 16px 30px}
+.tip-box{background:#FFF8E1;border-left:3px solid var(--gold);border-radius:10px;padding:14px 18px;font-size:.82rem;color:var(--text-l);line-height:1.8}
+.tip-box b{color:#E65100}
+.tip-box .corr{color:#2E7D32;font-weight:600}
+footer{text-align:center;padding:16px;color:var(--text-l);font-size:.78rem}
+@media(max-width:560px){
+  header h1{font-size:1.24rem}
+  .w-word{font-size:1rem;min-width:70px}
+  .w-jp{font-size:.74rem;min-width:84px}
+  .s-y{font-size:.98rem}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>粵語發音練習 · 職場俗語</h1>
+  <p><span class="pill">豬隊友・神隊友</span><span class="pill">出糧・炒魷魚</span><span class="pill">逐句朗讀</span></p>
+</header>
+
+<div class="controls">
+  <div class="cg"><label>語速</label><input type="range" id="speed" min="0.5" max="1.5" step="0.05" value="0.9"><span id="speedVal">0.90x</span></div>
+  <button class="btn-all" id="btnAll" onclick="toggleAll()">▶ 全部朗讀</button>
+</div>
+
+<main>
+  <div class="sec-title"><span class="n">①</span>新 Project 一腳踢<span class="sub">豬隊友 vs 神隊友</span>
+    <button class="btn-sec" onclick="playScene(sc1)">▶ 讀本段</button></div>
+  <div class="scard" id="c1"></div>
+
+  <div class="sec-title"><span class="n">②</span>出糧日與炒魷魚<span class="sub">職場心聲</span>
+    <button class="btn-sec" onclick="playScene(sc2)">▶ 讀本段</button></div>
+  <div class="scard" id="c2"></div>
+
+  <div class="sec-title"><span class="n">③</span>職場俗語小詞典<span class="sub">11 個俗語</span>
+    <button class="btn-sec" onclick="playScene(slang,'w')">▶ 讀全部俗語</button></div>
+  <div class="wcard" id="c3"></div>
+</main>
+
+<div class="tip">
+  <div class="tip-box">
+    <b>發音要點（易讀錯，逐個對）：</b><br>
+    • <b>「係」一律 hai6</b>（唔係 m4 hai6、都係 dou1 hai6、真係 zan1 hai6）——<span class="corr">唔係 si6</span><br>
+    • <b>「呢」示代詞讀 ni1</b>（呢啲 ni1 di1、呢次 ni1 ci3）——<span class="corr">唔係 nei5</span>（nei5 = 你）<br>
+    • <b>「隊」= deoi6</b>（豬隊友 zyu1 deoi6 jau5、神隊友 san4 deoi6 jau5）——<span class="corr">唔係 dui6</span><br>
+    • <b>「幫手」bong1 sau2</b>——<span class="corr">唔係 bang1</span>；<b>「好彩」hou2 coi2</b>——<span class="corr">唔係 coi1</span><br>
+    • <b>「仲有」zung6 jau5</b>；<b>「隨時」ceoi4 si4</b>——<span class="corr">「隨」唔係 seoi5</span><br>
+    • <b>「做晒」zou6 saai3</b>（＝做完）；<b>「所有」so2 jau5</b><br>
+    • <b>「出糧」ceot1 loeng4</b>（＝發薪水）——<span class="corr">唔係 leong4</span><br>
+    • <b>「爭取」zaang1 ceoi2</b>——<span class="corr">「取」唔係 keoi1</span><br>
+    • <b>「炒魷魚」caau2 jau4 jyu4</b>——<span class="corr">「魷」讀 jau4，唔係 jau1／jau2</span><br>
+    • <b>「會」兩讀</b>：助動詞「會」讀 <b>wui5</b>（會被 wui5 bei6）；名詞「會議／開會」讀 <b>wui6</b><br>
+    <br>
+    <b>俗語義（對照普通話）：</b><br>
+    蛇王＝摸魚偷懶 ｜ 做影帝＝裝模作樣 ｜ 豬隊友＝坑隊友 ｜ 咩鑊＝背黑鍋 ｜ 神隊友＝給力隊友 ｜ 食自己＝靠自己／自求多福 ｜ 一腳踢＝一人包辦 ｜ 博殺＝拼搏 ｜ 出糧＝發薪 ｜ 炒魷魚＝被開除<br>
+    <br>
+    <b>⚠️ 待你確認：</b><br>
+    • 「<b>跳草裙舞</b>」（tiu3 cou2 kwan4 mou5）——已按原文保留（＝以辭職作威脅爭取福利）<br>
+    • 第 1 句正讀為「<b>要</b>我一腳踢」<b>jiu3 ngo5 jat1 goek3 tek3</b>（要我一人包辦），已照原文校正<br>
+    <br>
+    <b>學習建議：</b>先點句子聽讀音 → 對粵拼 → 再看普通話；熟咗用「讀本段」連讀。本頁用預生成粵語 MP3，<b>系統瀏覽器（Safari／Chrome）打開即有聲</b>。
+  </div>
+</div>
+
+<footer>點擊句子或俗語即可朗讀 · 建議使用 Safari 或 Chrome 瀏覽器</footer>
+
+<script>
+/* =========================================================
+ * 場景一：新 Project 一腳踢（豬隊友 vs 神隊友）
+ * ========================================================= */
+const sc1 = [
+  {yue:'今次個新 Project，要我一腳踢做晒所有嘢。',
+   jp:'gam1 ci3 go3 san1 Project, jiu3 ngo5 jat1 goek3 tek3 zou6 saai3 so2 jau5 je5.',
+   t:'這次的新項目，要我一個人包辦做完所有的事。', s:'s1'},
+
+  {yue:'同 team 同事唔係蛇王，就係做影帝。',
+   jp:'tung4 team tung4 si6 m4 hai6 se4 wong4, zau6 hai6 zou6 jing2 dai3.',
+   t:'同組的同事不是在摸魚偷懶，就是在裝模作樣。', s:'s2'},
+
+  {yue:'遇到呢啲豬隊友，我真係隨時咩鑊！',
+   jp:'jyu6 dou3 ni1 di1 zyu1 deoi6 jau5, ngo5 zan1 hai6 ceoi4 si4 me1 wok6!',
+   t:'遇到這種豬隊友，我真的隨時準備背黑鍋！', s:'s3'},
+
+  {yue:'好彩條 team 仲有個神隊友幫手。',
+   jp:'hou2 coi2 tiu4 team zung6 jau5 go3 san4 deoi6 jau5 bong1 sau2.',
+   t:'還好團隊裡還有一個給力的隊友幫忙。', s:'s4'},
+
+  {yue:'如果唔係，呢次真係要食自己。',
+   jp:'jyu4 gwo2 m4 hai6, ni1 ci3 zan1 hai6 jiu3 sik6 zi6 gei2.',
+   t:'要不然這次真的只能自求多福了。', s:'s5'}
+];
+
+/* =========================================================
+ * 場景二：出糧日與炒魷魚
+ * ========================================================= */
+const sc2 = [
+  {yue:'大家博殺咗咁耐，最開心嘅都係每月出糧嗰日。',
+   jp:'daai6 gaa1 bok3 saat3 zo2 gam3 noi6, zeoi3 hoi1 sam1 ge3 dou1 hai6 mui5 jyut6 ceot1 loeng4 go2 jat6.',
+   t:'大家拼搏了這麼久，最開心的還是每月發薪水的那一天。', s:'s6'},
+
+  {yue:'好多同事私底下都討論緊，要唔要跳草裙舞嚟爭取福利。',
+   jp:'hou2 do1 tung4 si6 si1 dai2 haa6 dou1 tou2 leon6 gan2, jiu3 m4 jiu3 tiu3 cou2 kwan4 mou5 lai4 zaang1 ceoi2 fuk1 lei6.',
+   t:'很多同事私下都在討論，要不要以辭職作威脅來爭取福利。', s:'s7'},
+
+  {yue:'亦有人擔心做得唔好，會被公司炒魷魚。',
+   jp:'jik6 jau5 jan4 daam1 sam1 zou6 dak1 m4 hou2, wui5 bei6 gung1 si1 caau2 jau4 jyu4.',
+   t:'也有人擔心做得不好，會被公司開除。', s:'s8'}
+];
+
+/* =========================================================
+ * 職場俗語小詞典
+ * ========================================================= */
+const slang = [
+  {w:'蛇王',    jp:'se4 wong4',           t:'摸魚偷懶、躲懶',          s:'w1'},
+  {w:'做影帝',  jp:'zou6 jing2 dai3',     t:'裝模作樣、假裝忙碌',      s:'w2'},
+  {w:'豬隊友',  jp:'zyu1 deoi6 jau5',     t:'拖後腿、坑人的隊友',      s:'w3'},
+  {w:'咩鑊',    jp:'me1 wok6',            t:'背黑鍋、承擔責任',        s:'w4'},
+  {w:'神隊友',  jp:'san4 deoi6 jau5',     t:'給力、靠譜的隊友',        s:'w5'},
+  {w:'食自己',  jp:'sik6 zi6 gei2',       t:'靠自己、自求多福',        s:'w6'},
+  {w:'一腳踢',  jp:'jat1 goek3 tek3',     t:'一個人包辦全部',          s:'w7'},
+  {w:'博殺',    jp:'bok3 saat3',          t:'拼搏、拼命工作',          s:'w8'},
+  {w:'出糧',    jp:'ceot1 loeng4',        t:'發薪水',                  s:'w9'},
+  {w:'跳草裙舞', jp:'tiu3 cou2 kwan4 mou5', t:'以辭職作威脅爭取福利（待確認）', s:'w10'},
+  {w:'炒魷魚',  jp:'caau2 jau4 jyu4',     t:'被開除、解僱',            s:'w11'}
+];
+
+/* === 渲染：句子 === */
+function renderScene(data, cid, startNo){
+  var html='';
+  data.forEach(function(o,i){
+    var id=o.s;
+    html+='<div class="srow" id="sen-'+id+'" onclick="playItem(\''+id+'\',\''+o.s+'\')">'
+      +'<button class="s-play" onclick="event.stopPropagation();playItem(\''+id+'\',\''+o.s+'\')">▶</button>'
+      +'<div class="s-y"><span class="s-no">'+(startNo+i)+'</span>'+o.yue+'</div>'
+      +'<div class="s-j">'+o.jp+'</div>'
+      +'<div class="s-t">'+o.t+'</div>'
+      +'</div>';
+  });
+  document.getElementById(cid).innerHTML=html;
+}
+renderScene(sc1,'c1',1);
+renderScene(sc2,'c2',6);
+
+/* === 渲染：俗語 === */
+(function(){
+  var html='';
+  slang.forEach(function(o){
+    var id=o.s;
+    html+='<div class="wrow">'
+      +'<div class="w-head" onclick="playItem(\''+id+'\',\''+o.s+'\')">'
+      +'<span class="w-word">'+o.w+'</span>'
+      +'<span class="w-jp">'+o.jp+'</span>'
+      +'<span class="w-t">'+o.t+'</span>'
+      +'<button class="wb" id="wb-'+id+'" onclick="event.stopPropagation();playItem(\''+id+'\',\''+o.s+'\')">▶</button>'
+      +'</div></div>';
+  });
+  document.getElementById('c3').innerHTML=html;
+})();
+
+/* === 音頻播放：預生成 mp3（不依賴 Web Speech） === */
+var curAudio=null;
+var AUDIO_DIR='cantonese_audio_pt/';
+function audioSrc(s){ return AUDIO_DIR+s+'.mp3'; }
+
+function clearHL(){
+  document.querySelectorAll('.srow.on,.wb.on').forEach(function(e){e.classList.remove('on')});
+}
+function playAudio(src,onEnd){
+  try{ if(curAudio){curAudio.pause();curAudio=null;} }catch(e){}
+  var a=new Audio(src);
+  a.playbackRate=parseFloat(document.getElementById('speed').value)||1;
+  a.onended=function(){ if(onEnd)onEnd(); };
+  a.onerror=function(){ if(onEnd)onEnd(); };
+  curAudio=a;
+  var pr=a.play();
+  if(pr&&pr.catch)pr.catch(function(){ if(onEnd)onEnd(); });
+}
+function hl(id,on){
+  var el=document.getElementById('sen-'+id)||document.getElementById('wb-'+id);
+  if(el){ if(on){el.classList.add('on'); el.scrollIntoView({block:'center',behavior:'smooth'});} else el.classList.remove('on'); }
+}
+function playItem(id,s){
+  if(window.isPlayingAll)toggleAll();
+  clearHL(); hl(id,true);
+  playAudio(audioSrc(s),function(){hl(id,false)});
+}
+
+/* === 整段朗讀 === */
+var allQueue=[];var allIdx=0;var isPlayingAll=false;
+function playScene(arr,mode){
+  if(window.isPlayingAll)toggleAll();
+  clearHL();
+  allQueue=arr.map(function(o){return {id:o.s, s:o.s}});
+  allIdx=0; window.isPlayingAll=true;
+  document.getElementById('btnAll').classList.add('on');
+  document.getElementById('btnAll').textContent='■ 停止';
+  playNext();
+}
+function playNext(){
+  if(allIdx>=allQueue.length){ stopAll(); return; }
+  var it=allQueue[allIdx++];
+  clearHL(); hl(it.id,true);
+  playAudio(audioSrc(it.s),function(){ if(window.isPlayingAll) playNext(); });
+}
+function stopAll(){
+  window.isPlayingAll=false;
+  try{ if(curAudio){curAudio.pause();curAudio=null;} }catch(e){}
+  clearHL();
+  var b=document.getElementById('btnAll');
+  b.classList.remove('on'); b.textContent='▶ 全部朗讀';
+}
+function toggleAll(){
+  if(window.isPlayingAll){ stopAll(); return; }
+  var all=sc1.concat(sc2).concat(slang);
+  playScene(all);
+}
+document.getElementById('speed').addEventListener('input',function(){
+  document.getElementById('speedVal').textContent=parseFloat(this.value).toFixed(2)+'x';
+});
+</script>
+</body>
+</html>
