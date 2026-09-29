@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>粵語發音練習 · 《歡迎來龍餐館》一個鏡頭</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --p:#D84315;--p-d:#9F2C0D;--p-l:#FBE9E7;--p-xl:#FFF5F2;
+  --gold:#F9A825;--text:#1a1a1a;--text-l:#666;--border:#F5D8D0;--shadow:0 1px 6px rgba(0,0,0,.06);
+}
+body{font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(--p-xl);color:var(--text);line-height:1.6;min-height:100vh}
+header{background:linear-gradient(135deg,var(--p),var(--p-d));color:#fff;padding:26px 20px 18px;text-align:center;box-shadow:0 2px 12px rgba(216,67,21,.22)}
+header h1{font-size:1.45rem;margin-bottom:6px;letter-spacing:.5px}
+header p{font-size:.86rem;opacity:.92}
+header .pill{display:inline-block;background:rgba(255,255,255,.18);padding:2px 10px;border-radius:12px;font-size:.72rem;margin:0 3px}
+.pic-wrap{max-width:800px;margin:18px auto 0;padding:0 16px;text-align:center}
+.pic-wrap img{width:100%;max-width:520px;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.12);display:block;margin:0 auto}
+.pic-cap{text-align:center;font-size:.78rem;color:var(--text-l);margin-top:8px}
+.controls{max-width:800px;margin:16px auto;padding:0 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center}
+.cg{display:flex;align-items:center;gap:8px;background:#fff;padding:7px 14px;border-radius:20px;box-shadow:var(--shadow)}
+.cg label{font-size:.82rem;color:var(--text-l);white-space:nowrap}
+input[type=range]{accent-color:var(--p);width:90px}
+#speedVal{font-size:.8rem;color:var(--p);min-width:34px}
+.btn-all{background:var(--p);color:#fff;border:none;padding:9px 22px;border-radius:20px;font-size:.88rem;cursor:pointer;transition:.2s;white-space:nowrap}
+.btn-all:hover{background:var(--p-d);transform:translateY(-1px)}
+.btn-all.on{background:#E53935}
+main{max-width:800px;margin:0 auto;padding:0 16px 10px}
+.sec-title{display:flex;align-items:center;gap:10px;margin:22px 0 12px;font-size:1rem;font-weight:700;color:var(--p-d)}
+.sec-title .n{width:26px;height:26px;border-radius:50%;background:var(--p);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;flex-shrink:0}
+.sec-title .sub{font-size:.74rem;font-weight:400;color:var(--text-l)}
+.sec-title .btn-sec{margin-left:auto;background:var(--p-l);color:var(--p);border:none;padding:5px 14px;border-radius:16px;font-size:.76rem;cursor:pointer}
+.sec-title .btn-sec:hover{background:var(--p);color:#fff}
+.scard{background:#fff;border-radius:12px;padding:4px 14px;box-shadow:var(--shadow);margin-bottom:12px}
+.srow{padding:12px 6px;border-bottom:1px dashed var(--border);cursor:pointer;position:relative;border-radius:8px;transition:background .18s}
+.srow:last-child{border-bottom:none}
+.srow:hover{background:var(--p-xl)}
+.srow.on{background:var(--p-l);box-shadow:inset 3px 0 0 var(--p)}
+.s-no{display:inline-block;font-size:.66rem;background:var(--p);color:#fff;padding:1px 7px;border-radius:8px;margin-right:6px;vertical-align:middle;font-weight:600}
+.s-y{font-size:1.02rem;line-height:1.7;margin-bottom:3px;padding-right:30px}
+.s-j{font-size:.78rem;color:var(--p);font-family:"SF Mono",Menlo,monospace;letter-spacing:.2px;margin-bottom:3px}
+.s-t{font-size:.78rem;color:var(--text-l);line-height:1.6}
+.s-play{position:absolute;top:11px;right:6px;width:26px;height:26px;border-radius:50%;border:none;background:var(--p-l);color:var(--p);cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:.2s}
+.s-play:hover{background:var(--p);color:#fff}
+.srow.on .s-play{background:var(--p);color:#fff}
+.dur{text-align:center;font-size:.8rem;color:var(--text-l);margin:6px 0 0}
+.dur b{color:var(--p)}
+.tip{max-width:800px;margin:0 auto;padding:6px 16px 30px}
+.tip-box{background:#FFF8E1;border-left:3px solid var(--gold);border-radius:10px;padding:14px 18px;font-size:.82rem;color:var(--text-l);line-height:1.8}
+.tip-box b{color:#E65100}
+footer{text-align:center;padding:16px;color:var(--text-l);font-size:.78rem}
+@media(max-width:560px){header h1{font-size:1.2rem}.s-y{font-size:.98rem}.pic-wrap img{max-width:100%}}
+</style>
+</head>
+<body>
+<header>
+  <h1>粵語發音練習 · 《歡迎來龍餐館》</h1>
+  <p><span class="pill">一個鏡頭</span><span class="pill">逐句跟讀</span><span class="pill">平實粵語</span></p>
+</header>
+
+<div class="pic-wrap">
+  <img src="111.png" alt="徐福為細路煮熱飯">
+  <div class="pic-cap">徐福喺戰地用大鑊煮飯，畀細路帶嚟溫暖</div>
+</div>
+
+<div class="controls">
+  <div class="cg"><label>語速</label><input type="range" id="speed" min="0.5" max="1.5" step="0.05" value="0.9"><span id="speedVal">0.90x</span></div>
+  <button class="btn-all" id="btnAll" onclick="toggleAll()">▶ 全部朗讀</button>
+</div>
+
+<main>
+  <div class="sec-title"><span class="n">①</span>電影情節<span class="sub">5 句 · 連讀即完整描述</span>
+    <button class="btn-sec" onclick="playScene(lr)">▶ 讀全文</button></div>
+  <div class="scard" id="c1"></div>
+  <div class="dur" id="dur">全文連讀約 <b id="durSec">36</b> 秒</div>
+</main>
+
+<div class="tip">
+  <div class="tip-box">
+    <b>呢頁練咩？</b><br>
+    用電影《歡迎來龍餐館》入面「徐福帶住細路逃離營地、喺樹下煮飯」嘅一個鏡頭，練習平實粵語描述。<br><br>
+    <b>發音要點：</b><br>
+    • <b>「嘅」ge3</b>＝的；<b>「喺」hai2</b>＝在；<b>「畀」bei2</b>＝给（此處語境輕讀 bei2）<br>
+    • <b>「細路」sai3 lou6</b>＝小孩；<b>「廿三個」jaa6 saam1 go3</b>＝二十三个<br>
+    • <b>「執」zap1</b>＝捡；<b>「攞」lo2</b>＝拿；<b>「仲落」zung6 lok6</b>＝还加<br>
+    • <b>「鑊」wok6</b>＝锅（粵語地道說法，代替「鍋」wo1）<br>
+    • <b>「絕境」zyut6 ging2</b>、<b>「溫暖」wan1 nyun5</b>、<b>「希望」hei1 mong6</b><br><br>
+    <b>練習建議：</b>先逐句聽 → 跟讀；熟咗用「讀全文」連讀一次。語速可調慢至 0.7x。
+  </div>
+</div>
+
+<footer>點擊句子即可朗讀 · 建議使用 Safari 或 Chrome 瀏覽器</footer>
+
+<script>
+const lr = [
+  {yue:'電影《歡迎來龍餐館》嘅一個鏡頭，令我印象好深刻：',
+   jp:'din6 jing2 fun1 jing1 loi4 lung4 caan1 gun2 ge3 jat1 go3 ging2 tau4, ling6 ngo5 jan3 zoeng3 hou2 sam1 haak3:',
+   t:'电影《欢迎来龙餐馆》的一个镜头，令我印象深刻：', s:'l1'},
+
+  {yue:'徐福帶住廿三個細路由營地走咗出嚟，喺邊境大樹下，',
+   jp:'zeoi1 fuk1 daai3 zyu6 jaa6 saam1 go3 sai3 lou6 jau4 jing1 dei6 zau2 zo2 ceot1 lai4, hai2 bin1 ging3 daai6 syu6 haa6,',
+   t:'徐福带着二十三个小孩从营地逃了出来，在边境的大树下，', s:'l2'},
+
+  {yue:'冇廚具，執個舊油桶當鑊，攞啲剩菜煮烩飯，仲落咗蜜糖。',
+   jp:'mou5 cyu4 geoi6, zap1 go3 gau6 jau4 tung2 dong3 wok6, lo2 di1 zing6 coi3 zyu2 wui2 faan6, zung6 lok6 zo2 mat6 tong4.',
+   t:'没有厨具，捡个旧油桶当锅，要来些剩菜煮烩饭，还加了蜂蜜。', s:'l3'},
+
+  {yue:'啲細路圍住個鑊食飯。',
+   jp:'di1 sai3 lou6 wai4 zyu6 go3 wok6 sik6 faan6.',
+   t:'孩子们围在锅边吃饭。', s:'l4'},
+
+  {yue:'呢鑊簡單嘅烩飯，畀絕境嘅細路帶來溫暖同希望。',
+   jp:'ni1 wok6 gaan2 daan1 ge3 wui2 faan6, bei2 zyut6 ging2 ge3 sai3 lou6 daai3 loi4 on1 nyun5 tung4 hei1 mong6.',
+   t:'这一锅简单的烩饭，给绝境中的孩子带来了温暖与希望。', s:'l5'}
+];
+
+function renderScene(data, cid, startNo){
+  var html='';
+  data.forEach(function(o,i){
+    var id=o.s;
+    html+='<div class="srow" id="sen-'+id+'" onclick="playItem(\''+id+'\',\''+o.s+'\')">'
+      +'<button class="s-play" onclick="event.stopPropagation();playItem(\''+id+'\',\''+o.s+'\')">▶</button>'
+      +'<div class="s-y"><span class="s-no">'+(startNo+i)+'</span>'+o.yue+'</div>'
+      +'<div class="s-j">'+o.jp+'</div>'
+      +'<div class="s-t">'+o.t+'</div>'
+      +'</div>';
+  });
+  document.getElementById(cid).innerHTML=html;
+}
+renderScene(lr,'c1',1);
+
+var curAudio=null;
+var AUDIO_DIR='cantonese_audio_lr/';
+function audioSrc(s){ return AUDIO_DIR+s+'.mp3'; }
+function clearHL(){ document.querySelectorAll('.srow.on').forEach(function(e){e.classList.remove('on')}); }
+function playAudio(src,onEnd){
+  try{ if(curAudio){curAudio.pause();curAudio=null;} }catch(e){}
+  var a=new Audio(src);
+  a.playbackRate=parseFloat(document.getElementById('speed').value)||1;
+  a.onended=function(){ if(onEnd)onEnd(); };
+  a.onerror=function(){ if(onEnd)onEnd(); };
+  curAudio=a;
+  var pr=a.play();
+  if(pr&&pr.catch)pr.catch(function(){ if(onEnd)onEnd(); });
+}
+function hl(id,on){
+  var el=document.getElementById('sen-'+id);
+  if(el){ if(on){el.classList.add('on'); el.scrollIntoView({block:'center',behavior:'smooth'});} else el.classList.remove('on'); }
+}
+function playItem(id,s){
+  if(window.isPlayingAll)toggleAll();
+  clearHL(); hl(id,true);
+  playAudio(audioSrc(s),function(){hl(id,false)});
+}
+var allQueue=[];var allIdx=0;var isPlayingAll=false;
+function playScene(arr){
+  if(window.isPlayingAll)toggleAll();
+  clearHL();
+  allQueue=arr.map(function(o){return {id:o.s, s:o.s}});
+  allIdx=0; window.isPlayingAll=true;
+  var b=document.getElementById('btnAll'); b.classList.add('on'); b.textContent='■ 停止';
+  playNext();
+}
+function playNext(){
+  if(allIdx>=allQueue.length){ stopAll(); return; }
+  var it=allQueue[allIdx++];
+  clearHL(); hl(it.id,true);
+  playAudio(audioSrc(it.s),function(){ if(window.isPlayingAll) playNext(); });
+}
+function stopAll(){
+  window.isPlayingAll=false;
+  try{ if(curAudio){curAudio.pause();curAudio=null;} }catch(e){}
+  clearHL();
+  var b=document.getElementById('btnAll');
+  b.classList.remove('on'); b.textContent='▶ 全部朗讀';
+}
+function toggleAll(){ if(window.isPlayingAll){ stopAll(); return; } playScene(lr); }
+document.getElementById('speed').addEventListener('input',function(){
+  document.getElementById('speedVal').textContent=parseFloat(this.value).toFixed(2)+'x';
+});
+</script>
+</body>
+</html>
