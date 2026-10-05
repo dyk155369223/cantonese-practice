@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>粵語發音練習 · 國慶分享</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"PingFang HK","Microsoft YaHei",sans-serif;background:#f4f8f5;color:#1c2b28;line-height:1.65}
+  header{background:#c0392b;color:#fff;padding:18px 20px}
+  header h1{font-size:22px;font-weight:700}
+  header p{font-size:13px;opacity:.92;margin-top:4px}
+  .ctrl{position:sticky;top:0;z-index:10;background:#c0392b;color:#fff;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.2)}
+  .ctrl label{font-size:13px}
+  .ctrl input[type=range]{width:140px;vertical-align:middle}
+  .btn{background:#fff;color:#c0392b;border:none;border-radius:8px;padding:7px 14px;font-size:14px;font-weight:600;cursor:pointer}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:rgba(255,255,255,.15);color:#fff}
+  .tip{background:#fff8e6;border:1px solid #ffe39a;border-radius:10px;padding:12px 14px;font-size:13px;color:#6b5400;margin:14px 14px 0}
+  .tip b{color:#9a6b00}
+  .wrap{max-width:780px;margin:14px auto;padding:0 14px}
+  .card{background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:13px;box-shadow:0 1px 4px rgba(0,0,0,.06);display:flex;gap:13px;align-items:flex-start}
+  .play{background:#c0392b;color:#fff;border:none;border-radius:50%;width:42px;height:42px;font-size:16px;cursor:pointer;flex:0 0 auto;display:flex;align-items:center;justify-content:center;transition:background .15s;margin-top:2px}
+  .play:active{background:#962d22}
+  .play.on{background:#f0a500}
+  .body{flex:1}
+  .yue{font-size:21px;font-weight:700;color:#c0392b}
+  .jp{font-size:14px;color:#5b7a73;font-family:"Courier New",monospace;margin-top:4px;line-height:1.5}
+  .put{font-size:14px;color:#555;margin-top:7px;border-top:1px dashed #e0e8e4;padding-top:7px}
+  .num{display:inline-block;background:#c0392b;color:#fff;border-radius:6px;font-size:13px;padding:1px 8px;margin-right:7px;vertical-align:middle}
+</style>
+</head>
+<body>
+<header>
+  <h1>粵語發音練習 · 國慶分享</h1>
+  <p>十月一號國慶日去咗路環疊石塘山嘅分享稿。每句有 ▶ 朗讀；下面附粵拼同普通話對照。</p>
+</header>
+<div class="ctrl">
+  <label>語速 <span id="spd">1.0</span>x</label>
+  <input id="rate" type="range" min="0.5" max="1.5" step="0.1" value="1">
+  <button class="btn" id="all">全部朗讀</button>
+  <button class="btn ghost" id="stop">停止</button>
+</div>
+<div class="tip">💡 用<b>系統瀏覽器</b>（Safari / Chrome）打開才有聲；WorkBuddy 預覽面板（iframe）會靜音。語速可調到 0.7x 方便跟讀。點左側 ▶ 即播對應句子。</div>
+
+<div class="wrap" id="wrap"></div>
+
+<script>
+const AD="cantonese_audio_gq/";
+const sents=[
+ {yue:"十月一號係國慶日，好天。",
+  jp:"sap6 jyut6 jat1 hou6 hai6 gwok3 hing3 jat6, hou2 tin1",
+  put:"十月一号是国庆节，天气晴朗。",k:"gq1"},
+ {yue:"國慶日我再上到路環疊石塘山嘅山頂，嗰度係澳門最高嘅山。",
+  jp:"gwok3 hing3 jat6 ngo5 zoi3 soeng5 dou3 lou6 waan4 dip6 sek6 tong4 saan1 ge3 saan1 deng2, go2 dou6 hai6 ou3 mun4 zeoi3 gou1 ge3 saan1",
+  put:"国庆日我再一次登上了澳门最高峰——路环叠石塘山的山顶。",k:"gq2"},
+ {yue:"喺山頂睇到澳門好靚嘅山同海，我覺得呢日好有意義。",
+  jp:"hai2 saan1 deng2 tai2 dou3 ou3 mun4 hou2 leng3 ge3 saan1 tung4 hoi2, ngo5 gok3 dak1 ni1 jat6 hou2 jau5 ji3 ji6",
+  put:"在山顶看到澳门美丽的高山和大海，我觉得这一天非常有意义。（原句「看祖国的大好河山」非課件詞，已改用課件詞「山同海／靚」表達）",k:"gq3"},
+ {yue:"我仲行咗路環步行徑，高山、大海、藍天、白雲、沙灘、微風，風景好靚，好舒服呀。",
+  jp:"ngo5 zung6 haang4 zo2 lou6 waan4 bou6 haang4 ging3, gou1 saan1, daai6 hoi2, laam4 tin1, baak6 wan4, saa1 taan1, mei4 fung1, fung1 ging2 hou2 leng3, hou2 syu1 fuk6 aa3",
+  put:"我还走了路环步行径（Coloane Trail），高山、大海、蓝天、白云、沙滩、微风，景色好美，好舒服啊。（沙灘、微風直接沿用原詞；路環步行徑為澳門專有名詞）",k:"gq4"}
+];
+
+let cur=null, rate=1, playing=false;
+function play(key,btn){
+  if(cur) cur.classList.remove("on");
+  const a=new Audio(AD+key+".mp3");
+  a.playbackRate=rate;
+  if(btn){a.onplay=()=>{btn.classList.add("on");cur=btn;};a.onended=()=>btn.classList.remove("on");}
+  a.play();
+}
+function stopAll(){playing=false;if(cur)cur.classList.remove("on");}
+
+const wrap=document.getElementById("wrap");
+sents.forEach((s,i)=>{
+  const c=document.createElement("div");c.className="card";
+  c.innerHTML='<button class="play" aria-label="播放">▶</button>'+
+    '<div class="body"><div class="yue"><span class="num">'+(i+1)+'</span>'+s.yue+'</div>'+
+    '<div class="jp">'+s.jp+'</div>'+
+    '<div class="put">'+s.put+'</div></div>';
+  const btn=c.querySelector(".play");
+  btn.onclick=()=>play(s.k,btn);
+  wrap.appendChild(c);
+});
+
+document.getElementById("rate").oninput=(e)=>{rate=parseFloat(e.target.value);document.getElementById("spd").textContent=rate.toFixed(1);};
+document.getElementById("all").onclick=()=>{
+  stopAll();
+  playing=true;let i=0;
+  (function next(){
+    if(!playing||i>=sents.length)return;
+    const a=new Audio(AD+sents[i++].k+".mp3");a.playbackRate=rate;
+    a.onended=()=>setTimeout(next,300);a.play();
+  })();
+};
+document.getElementById("stop").onclick=()=>stopAll();
+</script>
+</body>
+</html>

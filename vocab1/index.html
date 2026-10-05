@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>粵語發音練習 · 高頻詞彙</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"PingFang HK","Microsoft YaHei",sans-serif;background:#eef5f3;color:#1c2b28;line-height:1.65}
+  header{background:#0e7c66;color:#fff;padding:18px 20px}
+  header h1{font-size:22px;font-weight:700}
+  header p{font-size:13px;opacity:.92;margin-top:4px}
+  .ctrl{position:sticky;top:0;z-index:10;background:#0e7c66;color:#fff;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.2)}
+  .ctrl label{font-size:13px}
+  .ctrl input[type=range]{width:140px;vertical-align:middle}
+  .btn{background:#fff;color:#0e7c66;border:none;border-radius:8px;padding:7px 14px;font-size:14px;font-weight:600;cursor:pointer}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:rgba(255,255,255,.15);color:#fff}
+  .tabs{display:flex;gap:8px;padding:12px 20px 0;background:#0e7c66}
+  .tab{background:rgba(255,255,255,.18);color:#fff;border:none;border-radius:10px 10px 0 0;padding:9px 18px;font-size:14px;font-weight:600;cursor:pointer}
+  .tab.on{background:#eef5f3;color:#0e7c66}
+  .tip{background:#fff8e6;border:1px solid #ffe39a;border-radius:10px;padding:12px 14px;font-size:13px;color:#6b5400;margin:14px 14px 0}
+  .tip b{color:#9a6b00}
+  .wrap{max-width:780px;margin:14px auto;padding:0 14px}
+  .page.hidden{display:none}
+  .group{margin-bottom:26px}
+  .group h2{font-size:16px;color:#0e7c66;border-left:5px solid #0e7c66;padding-left:10px;margin-bottom:12px}
+  .card{background:#fff;border-radius:12px;padding:13px 15px;margin-bottom:11px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  .row1{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+  .play{background:#0e7c66;color:#fff;border:none;border-radius:50%;width:38px;height:38px;font-size:15px;cursor:pointer;flex:0 0 auto;display:flex;align-items:center;justify-content:center;transition:background .15s}
+  .play:active{background:#0a5d4d}
+  .play.on{background:#f0a500}
+  .play.ex{width:32px;height:32px;font-size:13px;background:#5b9d8e}
+  .play.ex:active{background:#3f7c6e}
+  .play.ex.on{background:#f0a500}
+  .w{font-size:25px;font-weight:700;color:#0e7c66}
+  .jp{font-size:15px;color:#5b7a73;font-family:"Courier New",monospace}
+  .t{font-size:13.5px;color:#344;margin-left:auto;background:#f1f7f5;padding:2px 9px;border-radius:6px}
+  .exp{margin-top:10px;padding-top:10px;border-top:1px dashed #d8e6e2}
+  .exline{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .exlbl{font-size:12px;color:#fff;background:#0e7c66;border-radius:5px;padding:1px 7px}
+  .exyue{font-size:17px;font-weight:600;color:#244}
+  .exjp{font-size:13px;color:#5b7a73;font-family:"Courier New",monospace;margin-top:4px}
+  .extr{font-size:13.5px;color:#6a7b76;margin-top:2px}
+</style>
+</head>
+<body>
+<header>
+  <h1>粵語發音練習 · 高頻詞彙</h1>
+  <p>兩頁共 60 個日常最高頻字詞／短語（不含金融職場專詞）。每個詞有 ▶ 讀詞；例句有 ▶ 讀句。上方標籤切換兩頁。</p>
+</header>
+<div class="ctrl">
+  <label>語速 <span id="spd">1.0</span>x</label>
+  <input id="rate" type="range" min="0.5" max="1.5" step="0.1" value="1">
+  <button class="btn" id="all">全部朗讀</button>
+  <button class="btn ghost" id="stop">停止</button>
+</div>
+<div class="tabs">
+  <button class="tab on" id="tab0" onclick="showPage(0)">第一頁（30 詞）</button>
+  <button class="tab" id="tab1" onclick="showPage(1)">第二頁（30 詞）</button>
+</div>
+<div class="tip">💡 用<b>系統瀏覽器</b>（Safari / Chrome）打開才有聲；WorkBuddy 預覽面板（iframe）會靜音。語速可調到 0.7x 方便跟讀。點左側 ▶ 讀詞，點例句後 ▶ 讀句。</div>
+
+<div class="wrap">
+  <div class="page" id="page0"></div>
+  <div class="page hidden" id="page1"></div>
+</div>
+
+<script>
+const AD="cantonese_audio_hf1/";
+const pages=[
+ {groups:[
+  {title:"一、核心口語功能詞（最基礎，幾乎句句有）", items:[
+   {w:"唔",jp:"m4",t:"不／沒",k:"k1",ex:{yue:"我唔想去。",jp:"ngo5 m4 hoeng2 heoi3",tr:"我不想去。",ks:"k1s"}},
+   {w:"係",jp:"hai6",t:"是",k:"k2",ex:{yue:"佢係我朋友。",jp:"keoi5 hai6 ngo5 pang4 jau5",tr:"他是我朋友。",ks:"k2s"}},
+   {w:"嘅",jp:"ge3",t:"的",k:"k3",ex:{yue:"呢本書係我嘅。",jp:"ni1 bun2 syu1 hai6 ngo5 ge3",tr:"这本书是我的。",ks:"k3s"}},
+   {w:"咗",jp:"zo2",t:"了（完成體）",k:"k4",ex:{yue:"我食咗飯。",jp:"ngo5 sik6 zo2 faan6",tr:"我吃了饭。",ks:"k4s"}},
+   {w:"啲",jp:"di1",t:"些／一點",k:"k5",ex:{yue:"畀啲錢佢。",jp:"bei2 di1 cin2 keoi5",tr:"给他一点钱。",ks:"k5s"}},
+   {w:"咁",jp:"gam3",t:"這麼／那麼",k:"k6",ex:{yue:"咁大個！",jp:"gam3 daai6 go3",tr:"这么大个！",ks:"k6s"}},
+   {w:"幾",jp:"gei2",t:"幾／有點",k:"k7",ex:{yue:"幾好呀。",jp:"gei2 hou2 aa3",tr:"挺好的。",ks:"k7s"}},
+   {w:"邊",jp:"bin1",t:"哪",k:"k8",ex:{yue:"你住邊區？",jp:"nei5 zyu6 bin1 keoi1",tr:"你住哪个区？",ks:"k8s"}},
+   {w:"定",jp:"ding6",t:"還是",k:"k9",ex:{yue:"飲茶定咖啡？",jp:"jam2 caa4 ding6 gaa3 fe1",tr:"喝茶还是咖啡？",ks:"k9s"}},
+   {w:"嘢",jp:"je5",t:"東西／事情",k:"k10",ex:{yue:"食啲嘢啦。",jp:"sik6 di1 je5 laa1",tr:"吃点东西吧。",ks:"k10s"}},
+   {w:"喺",jp:"hai2",t:"在",k:"k11",ex:{yue:"我喺屋企。",jp:"ngo5 hai2 uk1 kei2",tr:"我在家。",ks:"k11s"}},
+   {w:"佢",jp:"keoi5",t:"他／她／它",k:"k12",ex:{yue:"佢好叻。",jp:"keoi5 hou2 lek1",tr:"他很聪明。",ks:"k12s"}},
+   {w:"仲",jp:"zung6",t:"還／更",k:"k13",ex:{yue:"仲未瞓。",jp:"zung6 mei6 fan3",tr:"还没睡。",ks:"k13s"}},
+   {w:"埋",jp:"maai4",t:"連同／也",k:"k14",ex:{yue:"收埋啲嘢。",jp:"sau1 maai4 di1 je5",tr:"把东西收起来。",ks:"k14s"}},
+  ]},
+  {title:"二、疑問／指代短語（極常用）", items:[
+   {w:"點解",jp:"dim2 gaai2",t:"為什麼",k:"k15",ex:{yue:"點解咁嘅？",jp:"dim2 gaai2 gam3 ge3",tr:"为什么这样？",ks:"k15s"}},
+   {w:"幾多",jp:"gei2 do1",t:"多少",k:"k16",ex:{yue:"幾多錢？",jp:"gei2 do1 cin2",tr:"多少钱？",ks:"k16s"}},
+   {w:"邊度",jp:"bin1 dou6",t:"哪裡",k:"k17",ex:{yue:"你去邊度？",jp:"nei5 heoi3 bin1 dou6",tr:"你去哪里？",ks:"k17s"}},
+   {w:"邊個",jp:"bin1 go3",t:"誰",k:"k18",ex:{yue:"邊個嚟？",jp:"bin1 go3 lai4",tr:"谁来？",ks:"k18s"}},
+   {w:"點樣",jp:"dim2 joeng6",t:"怎麼／怎樣",k:"k19",ex:{yue:"點樣做？",jp:"dim2 joeng6 zou6",tr:"怎么做？",ks:"k19s"}},
+   {w:"幾時",jp:"gei2 si4",t:"什麼時候",k:"k20",ex:{yue:"幾時返？",jp:"gei2 si4 faan1",tr:"什么时候回来？",ks:"k20s"}},
+  ]},
+  {title:"三、禮貌／時間／日常高頻", items:[
+   {w:"唔該",jp:"m4 goi1",t:"謝謝／麻煩你",k:"k21",ex:{yue:"唔該借筆。",jp:"m4 goi1 ze3 bat1",tr:"麻烦借支笔。",ks:"k21s"}},
+   {w:"唔好",jp:"m4 hou2",t:"不要／別",k:"k22",ex:{yue:"唔好嘈。",jp:"m4 hou2 cou4",tr:"别吵。",ks:"k22s"}},
+   {w:"屋企",jp:"uk1 kei2",t:"家",k:"k23",ex:{yue:"返屋企啦。",jp:"faan1 uk1 kei2 laa1",tr:"回家吧。",ks:"k23s"}},
+   {w:"今日",jp:"gam1 jat6",t:"今天",k:"k24",ex:{yue:"今日天晴。",jp:"gam1 jat6 tin1 cing4",tr:"今天天晴。",ks:"k24s"}},
+   {w:"聽日",jp:"ting1 jat6",t:"明天",k:"k25",ex:{yue:"聽日見。",jp:"ting1 jat6 gin3",tr:"明天见。",ks:"k25s"}},
+   {w:"返工",jp:"faan1 gung1",t:"上班",k:"k26",ex:{yue:"朝早返工。",jp:"ziu1 zou2 faan1 gung1",tr:"早上班。",ks:"k26s"}},
+  ]},
+  {title:"四、日常交際／吃喝高頻", items:[
+   {w:"食飯",jp:"sik6 faan6",t:"吃飯",k:"k27",ex:{yue:"一齊食飯。",jp:"jat1 cai4 sik6 faan6",tr:"一起吃饭。",ks:"k27s"}},
+   {w:"放工",jp:"fong3 gung1",t:"下班",k:"k28",ex:{yue:"放工去玩。",jp:"fong3 gung1 heoi3 waan2",tr:"下班去玩。",ks:"k28s"}},
+   {w:"多謝",jp:"do1 ze6",t:"謝謝",k:"k29",ex:{yue:"多謝你嘅禮物。",jp:"do1 ze6 nei5 ge3 lai5 mat6",tr:"谢谢你的礼物。",ks:"k29s"}},
+   {w:"對唔住",jp:"deoi3 m4 zyu6",t:"對不起／抱歉",k:"k30",ex:{yue:"對唔住，阻你。",jp:"deoi3 m4 zyu6 zo2 nei5",tr:"对不起，打扰你。",ks:"k30s"}},
+  ]},
+ ]},
+ {groups:[
+  {title:"五、常用動詞（最常用動作）", items:[
+   {w:"睇",jp:"tai2",t:"看",k:"k31",ex:{yue:"睇電視。",jp:"tai2 din6 si6",tr:"看电视。",ks:"k31s"}},
+   {w:"買",jp:"maai5",t:"買",k:"k32",ex:{yue:"買個包。",jp:"maai5 go3 baau1",tr:"买个包子。",ks:"k32s"}},
+   {w:"攞",jp:"lo2",t:"拿／取",k:"k33",ex:{yue:"攞本書。",jp:"lo2 bun2 syu1",tr:"拿本书。",ks:"k33s"}},
+   {w:"搵",jp:"wan2",t:"找",k:"k34",ex:{yue:"搵唔到。",jp:"wan2 m4 dou2",tr:"找不到。",ks:"k34s"}},
+   {w:"做",jp:"zou6",t:"做",k:"k35",ex:{yue:"做做功課。",jp:"zou6 zou6 gung1 fo3",tr:"做做功课。",ks:"k35s"}},
+   {w:"去",jp:"heoi3",t:"去",k:"k36",ex:{yue:"去街啦。",jp:"heoi3 gaai1 laa1",tr:"出去逛逛吧。",ks:"k36s"}},
+   {w:"嚟",jp:"lai4",t:"來",k:"k37",ex:{yue:"佢嚟喇。",jp:"keoi5 lai4 laa3",tr:"他来了。",ks:"k37s"}},
+   {w:"行",jp:"haang4",t:"走／步行",k:"k38",ex:{yue:"行下街。",jp:"haang4 haa5 gaai1",tr:"逛逛街。",ks:"k38s"}},
+   {w:"坐",jp:"co5",t:"坐",k:"k39",ex:{yue:"坐低飲嘢。",jp:"co5 dai1 jam2 je5",tr:"坐下来喝点东西。",ks:"k39s"}},
+   {w:"瞓",jp:"fan3",t:"睡",k:"k40",ex:{yue:"去瞓覺。",jp:"heoi3 fan3 gaau3",tr:"去睡觉。",ks:"k40s"}},
+   {w:"飲",jp:"jam2",t:"喝",k:"k41",ex:{yue:"飲杯茶。",jp:"jam2 bui1 caa4",tr:"喝杯茶。",ks:"k41s"}},
+   {w:"講",jp:"gong2",t:"說",k:"k42",ex:{yue:"講廣東話。",jp:"gong2 gwong2 dung1 waa6",tr:"说广东话。",ks:"k42s"}},
+   {w:"聽",jp:"teng1",t:"聽",k:"k43",ex:{yue:"聽唔明。",jp:"teng1 m4 ming4",tr:"听不懂。",ks:"k43s"}},
+   {w:"知",jp:"zi1",t:"知道",k:"k44",ex:{yue:"我知喇。",jp:"ngo5 zi1 laa3",tr:"我知道了。",ks:"k44s"}},
+   {w:"覺得",jp:"gok3 dak1",t:"覺得",k:"k45",ex:{yue:"我覺得好。",jp:"ngo5 gok3 dak1 hou2",tr:"我觉得好。",ks:"k45s"}},
+  ]},
+  {title:"六、常用形容詞", items:[
+   {w:"靚",jp:"leng3",t:"漂亮",k:"k46",ex:{yue:"件衫好靚。",jp:"gin6 saam1 hou2 leng3",tr:"这件衣服很漂亮。",ks:"k46s"}},
+   {w:"細",jp:"sai3",t:"小",k:"k47",ex:{yue:"個仔好細。",jp:"go3 zai2 hou2 sai3",tr:"这孩子很小。",ks:"k47s"}},
+   {w:"新",jp:"san1",t:"新",k:"k48",ex:{yue:"買件新衫。",jp:"maai5 gin6 san1 saam1",tr:"买件新衣服。",ks:"k48s"}},
+   {w:"快",jp:"faai3",t:"快",k:"k49",ex:{yue:"行快啲。",jp:"haang4 faai3 di1",tr:"走快点。",ks:"k49s"}},
+   {w:"慢",jp:"maan6",t:"慢",k:"k50",ex:{yue:"講慢啲。",jp:"gong2 maan6 di1",tr:"说慢一点。",ks:"k50s"}},
+   {w:"凍",jp:"dung3",t:"冷",k:"k51",ex:{yue:"好凍呀。",jp:"hou2 dung3 aa3",tr:"好冷啊。",ks:"k51s"}},
+   {w:"熱",jp:"jit6",t:"熱",k:"k52",ex:{yue:"好熱呀。",jp:"hou2 jit6 aa3",tr:"好热啊。",ks:"k52s"}},
+  ]},
+  {title:"七、常用名詞", items:[
+   {w:"錢",jp:"cin2",t:"錢",k:"k53",ex:{yue:"冇錢喇。",jp:"mou5 cin2 laa3",tr:"没钱了。",ks:"k53s"}},
+   {w:"人",jp:"jan4",t:"人",k:"k54",ex:{yue:"好多人。",jp:"hou2 do1 jan4",tr:"很多人。",ks:"k54s"}},
+   {w:"朋友",jp:"pang4 jau5",t:"朋友",k:"k55",ex:{yue:"佢係朋友。",jp:"keoi5 hai6 pang4 jau5",tr:"他是朋友。",ks:"k55s"}},
+   {w:"地方",jp:"dei6 fong1",t:"地方",k:"k56",ex:{yue:"搵個地方坐。",jp:"wan2 go3 dei6 fong1 co5",tr:"找个地方坐。",ks:"k56s"}},
+  ]},
+  {title:"八、時間／狀態短語", items:[
+   {w:"而家",jp:"ji4 gaa1",t:"現在",k:"k57",ex:{yue:"而家幾點？",jp:"ji4 gaa1 gei2 dim2",tr:"现在几点？",ks:"k57s"}},
+   {w:"一陣",jp:"jat1 zan6",t:"一會兒",k:"k58",ex:{yue:"等一陣。",jp:"dang2 jat1 zan6",tr:"等一会儿。",ks:"k58s"}},
+   {w:"好耐",jp:"hou2 noi6",t:"很久",k:"k59",ex:{yue:"好耐冇見。",jp:"hou2 noi6 mou5 gin3",tr:"很久没见。",ks:"k59s"}},
+   {w:"得",jp:"dak1",t:"可以／行",k:"k60",ex:{yue:"咁都得？",jp:"gam3 dou1 dak1",tr:"这样也行？",ks:"k60s"}},
+  ]},
+ ]},
+];
+
+let cur=null, rate=1, playing=false, activePage=0;
+function play(key,btn){
+  if(cur) cur.classList.remove("on");
+  const a=new Audio(AD+key+".mp3");
+  a.playbackRate=rate;
+  if(btn){a.onplay=()=>{btn.classList.add("on");cur=btn;};a.onended=()=>btn.classList.remove("on");}
+  a.play();
+}
+function stopAll(){playing=false;if(cur)cur.classList.remove("on");}
+
+function renderPage(idx){
+  const wrap=document.getElementById("page"+idx);
+  wrap.innerHTML="";
+  pages[idx].groups.forEach(g=>{
+    const sec=document.createElement("div");sec.className="group";
+    const h=document.createElement("h2");h.textContent=g.title;sec.appendChild(h);
+    g.items.forEach(it=>{
+      const c=document.createElement("div");c.className="card";
+      c.innerHTML='<div class="row1">'+
+        '<button class="play" aria-label="播放詞">▶</button>'+
+        '<span class="w">'+it.w+'</span>'+
+        '<span class="jp">'+it.jp+'</span>'+
+        '<span class="t">'+it.t+'</span></div>'+
+        '<div class="exp"><div class="exline">'+
+        '<span class="exlbl">例句</span>'+
+        '<span class="exyue">'+it.ex.yue+'</span>'+
+        '<button class="play ex" aria-label="播放例句">▶</button></div>'+
+        '<div class="exjp">'+it.ex.jp+'</div>'+
+        '<div class="extr">'+it.ex.tr+'</div></div>';
+      const wb=c.querySelector(".play");
+      wb.onclick=()=>play(it.k,wb);
+      const eb=c.querySelector(".play.ex");
+      eb.onclick=()=>play(it.ex.ks,eb);
+      sec.appendChild(c);
+    });
+    wrap.appendChild(sec);
+  });
+}
+function showPage(idx){
+  activePage=idx;
+  document.getElementById("tab0").classList.toggle("on",idx===0);
+  document.getElementById("tab1").classList.toggle("on",idx===1);
+  document.getElementById("page0").classList.toggle("hidden",idx!==0);
+  document.getElementById("page1").classList.toggle("hidden",idx!==1);
+}
+
+renderPage(0);
+renderPage(1);
+showPage(0);
+
+document.getElementById("rate").oninput=(e)=>{rate=parseFloat(e.target.value);document.getElementById("spd").textContent=rate.toFixed(1);};
+document.getElementById("all").onclick=()=>{
+  stopAll();
+  const keys=[];pages[activePage].groups.forEach(g=>g.items.forEach(it=>keys.push(it.k)));
+  playing=true;let i=0;
+  (function next(){
+    if(!playing||i>=keys.length)return;
+    const a=new Audio(AD+keys[i++]+".mp3");a.playbackRate=rate;
+    a.onended=()=>setTimeout(next,250);a.play();
+  })();
+};
+document.getElementById("stop").onclick=()=>stopAll();
+</script>
+</body>
+</html>
